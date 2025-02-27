@@ -16,7 +16,7 @@ const SignUp = () => {
 
             <div className='mt-28 flex justify-center'>
               <div>
-                <p className='text-2xl font-medium inline-block'>Get started!</p>
+                <p className='text-3xl font-medium inline-block'>Get started!</p>
                 <p className='text-xs font-light text-zinc-400 mt-2'>Smarter Insights for Your Crypto Journey</p>
                 <button className='mt-6 w-[300px] bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-2 smoothTransition hover:bg-borderGray'>
                   <img src={assets.googleLogo} alt="" className='w-[20px]'/>
@@ -43,7 +43,7 @@ const SignUp = () => {
                 </form>
 
                 <Link to="/login">
-                  <p className='text-xs mt-4 text-center font-light'>Already have an account? <span className='text-violet font-medium'>Log in</span></p>
+                  <p className='text-[13px] mt-4 text-center font-light'>Already have an account? <span className='text-violet font-medium'>Log in</span></p>
                 </Link>
                 </div>
               </div>
