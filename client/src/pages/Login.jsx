@@ -1,10 +1,9 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import assets from '../assets/assets'
 
 const Login = () => {
   return (
-    <div className='h-screen'>
+    <div className='h-screen text-white'>
         <div className='flex'>
           {/* Left Side */}
           <div className='w-1/2 h-screen bg-[#090909] p-6'>

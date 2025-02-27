@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div className='w-full h-screen bg-gradient-to-br from-[#070808] to-[#2b1f2e]'>
+    <div className='w-full h-screen bg-gradient-to-br from-[#000000] to-[#261b29] text-zinc-200'>
       {/* Navbar */}
       <div className='relative flex items-center justify-center py-5'>
         <div className='flex gap-2 items-center w-[100px] absolute left-6 top-4'>
@@ -13,10 +13,10 @@ const Home = () => {
         </div>
 
         <div>
-          <ul className='flex items-center gap-32'>
+          <ul className='flex items-center gap-28'>
             <Link to='/dashboard' className='smoothTransition hover:-translate-y-0.5 text-sm'>Dashboard</Link>
             <Link to='/profile' className='smoothTransition hover:-translate-y-0.5 text-sm'>Profile</Link>
-            <Link to='/dashboard' className='smoothTransition hover:-translate-y-0.5 text-sm'>FinBot</Link>
+            <Link to='/finbot' className='smoothTransition hover:-translate-y-0.5 text-sm'>FinBot</Link>
           </ul>
         </div>
       </div>
@@ -29,10 +29,10 @@ const Home = () => {
 
         <div className='text-center mt-11'>
           <p className='text-5xl font-semibold text-zinc-200'>Meet LuneX</p>
-          <p className='font-light text-zinc-400 mt-6'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
+          <p className='font-light text-zinc-400 mt-6 text-sm'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
         </div>
 
-        <div className='mt-16'>
+        <div className='mt-24'>
           <p className='text-2xl font-semibold'>Why LuneX?</p>
           <div className='flex-col items-center mt-7'>
             <div className='flex justify-between items-center text-sm w-full'>
@@ -44,7 +44,7 @@ const Home = () => {
                 </div>
               </div>
               <div className='flex gap-2 w-[300px]'>
-                <assets.MdSpatialTracking className='text-violet text-3xl'/>
+                <assets.MdSpatialTracking className='text-[#a392f9] text-3xl'/>
                 <div className='leading-6'>
                   <p className='font-semibold mt-1'>Real-Time Tracking</p>
                   <p className='text-zinc-400'>Stay updated with live price movements and market data</p>

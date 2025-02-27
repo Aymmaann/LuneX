@@ -2,7 +2,7 @@ import React from 'react'
 
 const FinBot = () => {
   return (
-    <div>FinBot</div>
+    <div className='text-black'>FinBot</div>
   )
 }
 
