@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import Dashboard from './pages/Dashboard'
 import NotFound from './pages/NotFound'
 import FinBot from './pages/FinBot'
+import Trending from './pages/Trending'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/finbot' element={<FinBot />} />
+        <Route path='/trending' element={<Trending />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>

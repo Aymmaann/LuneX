@@ -4,9 +4,6 @@ import assets from "../assets/assets.js"
 
 const Sidebar = () => {
   const location = useLocation();
-  console.log(location.pathname);
-
-//   const [active, setActive] = useState(getActiveLocation);
 
   return (
     <div className='block fixed overflow-y-auto w-64 h-screen bg-[#0b0c19] p-4'>
@@ -29,6 +26,13 @@ const Sidebar = () => {
                     <assets.RiDashboardFill className={`text-[18px] ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`} />
                 </div>
                 <p className={`text-sm font-semibold ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`}>Dashboard</p>
+            </Link>
+
+            <Link to='/trending' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/trending'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <div className="p-2 rounded-md">
+                    <assets.IoMdTrendingUp className={`text-[18px] ${location.pathname === '/trending'? 'text-violet' : 'text-white'}`} />
+                </div>
+                <p className={`text-sm font-semibold ${location.pathname === '/trending'? 'text-violet' : 'text-white'}`}>Trending</p>
             </Link>
 
             <Link to='/profile' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/profile'? 'bg-[#131627]' : 'bg-transparent'}`}>

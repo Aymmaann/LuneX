@@ -18,6 +18,7 @@ import { FaHome } from "react-icons/fa";
 import { CiSaveDown1 } from "react-icons/ci";
 import { IoArrowUpCircle } from "react-icons/io5";
 import { IoArrowDownCircle } from "react-icons/io5";
+import { IoMdTrendingUp } from "react-icons/io";
 
 const assets = {
     logo,
@@ -37,7 +38,8 @@ const assets = {
     FaHome,
     CiSaveDown1,
     IoArrowUpCircle,
-    IoArrowDownCircle
+    IoArrowDownCircle,
+    IoMdTrendingUp
 }
 
 export default assets;
