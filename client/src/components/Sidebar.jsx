@@ -9,7 +9,7 @@ const Sidebar = () => {
 //   const [active, setActive] = useState(getActiveLocation);
 
   return (
-    <div className='block fixed overflow-y-auto w-64 h-screen bg-[#080913] p-4'>
+    <div className='block fixed overflow-y-auto w-64 h-screen bg-[#0b0c19] p-4'>
         <div className='flex gap-2 items-center w-[100px] pl-2'>
           <img src={assets.noBgLogo} alt="" className='w-[25px]'/>
           <p className='text-lg font-light'>Lune<span className='font-semibold'>X</span></p>
@@ -24,18 +24,18 @@ const Sidebar = () => {
                 <p className='text-sm font-semibold'>Home</p>
             </Link>
 
-            <Link to='/dashboard' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/dashboard'? 'bg-[#1a1f37]' : 'bg-transparent'}`}>
-                <div className="p-2 rounded-xl">
-                    <assets.RiDashboardFill className='text-[18px]' />
+            <Link to='/dashboard' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/dashboard'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <div className="p-2 rounded-md">
+                    <assets.RiDashboardFill className={`text-[18px] ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`} />
                 </div>
-                <p className='text-sm font-semibold'>Dashboard</p>
+                <p className={`text-sm font-semibold ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`}>Dashboard</p>
             </Link>
 
-            <Link to='/profile' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/profile'? 'bg-[#1a1f37]' : 'bg-transparent'}`}>
-                <div className="p-2 rounded-xl">
-                    <assets.MdPerson className='text-[18px]' />
+            <Link to='/profile' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/profile'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <div className="p-2 rounded-md">
+                    <assets.MdPerson className={`text-[18px] ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`} />
                 </div>
-                <p className='text-sm font-semibold'>Profile</p>
+                <p className={`text-sm font-semibold ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`}>Profile</p>
             </Link>
         </div>
         {/* <div className='p-4 h-full'>

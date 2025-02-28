@@ -14,6 +14,9 @@ import { IoSearch } from "react-icons/io5";
 import { MdPerson } from "react-icons/md";
 import { RiDashboardFill } from "react-icons/ri";
 import { FaHome } from "react-icons/fa";
+import { CiSaveDown1 } from "react-icons/ci";
+import { IoArrowUpCircle } from "react-icons/io5";
+import { IoArrowDownCircle } from "react-icons/io5";
 
 const assets = {
     logo,
@@ -29,7 +32,10 @@ const assets = {
     IoSearch,
     MdPerson,
     RiDashboardFill,
-    FaHome
+    FaHome,
+    CiSaveDown1,
+    IoArrowUpCircle,
+    IoArrowDownCircle
 }
 
 export default assets;

@@ -30,9 +30,12 @@ const Home = () => {
         <div className='text-center mt-11'>
           <p className='text-5xl font-semibold text-zinc-200'>Meet LuneX</p>
           <p className='font-light text-zinc-400 mt-6 text-sm'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
+          <Link to="/dashboard">
+            <button className='mt-6 py-2 px-4 bg-[#483e54] rounded-md smoothTransition font-medium text-sm hover:bg-[#312b39]'>Get started</button>
+          </Link>
         </div>
 
-        <div className='mt-24'>
+        <div className='mt-20'>
           <p className='text-2xl font-semibold'>Why LuneX?</p>
           <div className='flex-col items-center mt-7'>
             <div className='flex justify-between items-center text-sm w-full'>

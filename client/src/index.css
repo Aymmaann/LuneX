@@ -27,7 +27,7 @@
   background-image: radial-gradient(circle, #808080 1px, rgba(0, 0, 0, 0) 1px);
   background-color: rgb(18, 18, 18); /* Ensures consistent dark background */
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .glow {
