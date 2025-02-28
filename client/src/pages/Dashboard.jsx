@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import assets from '../assets/assets'
 import Loading from '../components/Loading';
+import NotFound from './NotFound';
 
 const Dashboard = () => {
   const [cryptos, setCryptos] = useState([]);
@@ -27,7 +28,6 @@ const Dashboard = () => {
         const data = await response.json()
         setCryptos(data)
         setUpdatedCryptos(data)
-        console.log(data);
         
       } catch(error) {
         setError(error.message)
@@ -39,10 +39,10 @@ const Dashboard = () => {
   }, [])
 
   if(loading) return <Loading />
-  if(error) return <p>Error: {error}</p>
+  if(error) return <NotFound />
   
   return (
-    <div className='flex text-zinc-200 bg-[#05060f] min-h-screen'>
+    <div className='flex text-zinc-300 bg-[#05060f] min-h-screen overscroll-none'>
       <Sidebar />
 
       <div className='flex-1 pl-64 bg-[#05060f]'>

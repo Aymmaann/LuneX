@@ -4,6 +4,7 @@ import googleLogo from './images/google-logo.png';
 import loginImg from './images/login-img.png'
 import noBgLogo from './images/no-bg-logo.png';
 import pfp from './images/pfp.png'
+import errorbg from './images/error-bg.jpg'
 
 // Icons
 import { BiSolidAnalyse } from "react-icons/bi";
@@ -24,6 +25,7 @@ const assets = {
     loginImg,
     noBgLogo,
     pfp,
+    errorbg,
 
     BiSolidAnalyse,
     MdSpatialTracking,

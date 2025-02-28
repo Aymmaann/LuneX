@@ -1,37 +1,25 @@
 import React from 'react'
 import assets from '../assets/assets'
 import { Link } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
-    <div className='w-full h-screen bg-gradient-to-br from-[#000000] to-[#261b29] text-zinc-200'>
-      {/* Navbar */}
-      <div className='relative flex items-center justify-center py-5'>
-        <div className='flex gap-2 items-center w-[100px] absolute left-6 top-4'>
-          <img src={assets.noBgLogo} alt="" className='w-[25px]'/>
-          <p className='text-lg font-light'>Lune<span className='font-semibold'>X</span></p>
-        </div>
-
-        <div>
-          <ul className='flex items-center gap-28'>
-            <Link to='/dashboard' className='smoothTransition hover:-translate-y-0.5 text-sm'>Dashboard</Link>
-            <Link to='/profile' className='smoothTransition hover:-translate-y-0.5 text-sm'>Profile</Link>
-            <Link to='/finbot' className='smoothTransition hover:-translate-y-0.5 text-sm'>FinBot</Link>
-          </ul>
-        </div>
-      </div>
+    // <div className='w-full h-screen bg-gradient-to-br from-[#000000] to-[#261b29] text-zinc-200'>
+    <div className='w-full h-screen text-zinc-200 bg-[url("/Users/ayman/Desktop/Lunex/client/src/assets/images/error-bg.jpg")] bg-top'>
+      <Navbar />
 
       <div className='w-[750px] mx-auto mt-24'>
-        <div className='flex items-center gap-3 rounded-2xl bg-[#483e54] p-1 w-[257px] mx-auto'>
+        <div className='flex items-center gap-3 rounded-2xl bg-[#18153c] p-1 w-[257px] mx-auto'>
           <div className='bg-gradient-to-b from-[#6671ea] to-[#a264e3] text-xs rounded-xl py-1 px-2 font-semibold'>New</div>
           <p className='text-xs mr-3 font-light'>Assess Crypto Volatility Instantly</p>
         </div>
 
         <div className='text-center mt-11'>
           <p className='text-5xl font-semibold text-zinc-200'>Meet LuneX</p>
-          <p className='font-light text-zinc-400 mt-6 text-sm'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
+          <p className='font-light mt-6 text-sm'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
           <Link to="/dashboard">
-            <button className='mt-6 py-2 px-4 bg-[#483e54] rounded-md smoothTransition font-medium text-sm hover:bg-[#312b39]'>Get started</button>
+            <button className='mt-6 py-2 px-4 bg-[#262063] rounded-md smoothTransition font-medium text-sm hover:bg-[#312b39]'>Get started</button>
           </Link>
         </div>
 
