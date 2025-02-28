@@ -15,8 +15,8 @@ const CryptoCard = ({ crypto }) => {
             <assets.CiSaveDown1 className='text-zinc-500 text-[20px] cursor-pointer' />
         </div>
 
-        <p className='text-xs text-zinc-500 mt-6'>Price:</p>
-        <p className='text-3xl font-medium mt-2'>${crypto.current_price}</p>
+        <p className='text-sm text-zinc-500 mt-6'>Price:</p>
+        <p className='text-3xl font-medium mt-1'>${crypto.current_price}</p>
         <div className="flex items-center gap-1 mt-2">
             <div className={`rounded-md ${crypto.price_change_percentage_24h > 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
                 {crypto.price_change_percentage_24h > 0? (

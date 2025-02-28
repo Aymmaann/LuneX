@@ -60,9 +60,9 @@ const Dashboard = () => {
         </div>
 
         {/* Rendering all cryptos */}
-        <div className='flex items-center gap-4 flex-wrap p-4'>
+        <div className='grid grid-cols-3 gap-4 p-4'>
           {updatedCryptos.map((crypto) => (
-            <div key={crypto.id} className='p-5 rounded-xl w-[350px] bg-[#0b0c19]'>
+            <div key={crypto.id} className='p-5 rounded-xl  bg-[#0b0c19]'>
               <CryptoCard crypto={crypto} />
             </div>
           ))}

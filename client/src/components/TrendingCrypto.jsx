@@ -15,7 +15,7 @@ const TrendingCrypto = ({ crypto }) => {
             <assets.CiSaveDown1 className='text-zinc-500 text-[25px] cursor-pointer' />
         </div>
 
-        <p className='text-xs text-zinc-500 mt-6'>Price:</p>
+        <p className='text-sm text-zinc-500 mt-6'>Price:</p>
         <p className='text-3xl font-medium mt-2'>${crypto.item.data.price}</p>
         
         <div className="flex items-center gap-1 mt-2">

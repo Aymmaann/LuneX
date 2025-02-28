@@ -58,9 +58,9 @@ const Trending = () => {
                 </div>
             </div>
 
-            <div className='flex items-center gap-4 flex-wrap p-4'>
+            <div className='grid grid-cols-2 gap-4 p-4'>
                 {updatedCryptos.map(crypto => (
-                    <div key={crypto.item.id} className='p-5 rounded-xl w-[530px] h-[268px] bg-[#0b0c19]'>
+                    <div key={crypto.item.id} className='p-5 rounded-xl bg-[#0b0c19]'>
                         <TrendingCrypto crypto={crypto}/>
                     </div>
                 ))}
