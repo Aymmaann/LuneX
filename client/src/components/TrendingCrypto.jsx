@@ -31,8 +31,8 @@ const TrendingCrypto = ({ crypto }) => {
         
         <div className='mt-4 text-zinc-500'>
             <p className='text-sm font-light'>Market Cap Rank: <span className='font-medium text-zinc-300'>{crypto.item.market_cap_rank}</span></p>
-            <p className='text-sm font-light mt-1'>Market Cap: <span className='font-medium text-zinc-300'>{crypto.item.data.market_cap}</span></p>
-            <p className='text-sm font-light mt-1'>Total Volume: <span className='font-medium text-zinc-300'>{crypto.item.data.total_volume}</span></p>
+            {/* <p className='text-sm font-light mt-1'>Market Cap: <span className='font-medium text-zinc-300'>{crypto.item.data.market_cap}</span></p>
+            <p className='text-sm font-light mt-1'>Total Volume: <span className='font-medium text-zinc-300'>{crypto.item.data.total_volume}</span></p> */}
         </div>
     </div>
   )

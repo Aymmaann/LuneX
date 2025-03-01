@@ -19,10 +19,11 @@ import { CiSaveDown1 } from "react-icons/ci";
 import { IoArrowUpCircle } from "react-icons/io5";
 import { IoArrowDownCircle } from "react-icons/io5";
 import { IoMdTrendingUp } from "react-icons/io";
-// import { FaFileCircleCheck } from "react-icons/fa6";
 import { LuFileDown } from "react-icons/lu";
+import { IoMdClose } from "react-icons/io";
 
 const assets = {
+    // Images
     logo,
     googleLogo,
     loginImg,
@@ -30,6 +31,7 @@ const assets = {
     pfp,
     errorbg,
 
+    // Icons
     BiSolidAnalyse,
     MdSpatialTracking,
     FaBell,
@@ -42,7 +44,8 @@ const assets = {
     IoArrowUpCircle,
     IoArrowDownCircle,
     IoMdTrendingUp,
-    LuFileDown
+    LuFileDown,
+    IoMdClose
 }
 
 export default assets;

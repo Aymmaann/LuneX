@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
-import assets from '../assets/assets'
 import Loading from '../components/Loading';
 import NotFound from './NotFound';
-import CryptoCard from '../components/CryptoCard';
 import TrendingCrypto from '../components/TrendingCrypto';
 import SearchNav from '../components/SearchNav';
+import Modal from '../components/Modal';
+import TrendingModal from '../components/TrendingModal';
 
 const Trending = () => {
   const [trending, setTrending] = useState([]);
@@ -13,6 +13,7 @@ const Trending = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
+  const [selectedCrypto, setSelectedCrypto] = useState(null)
 
   const handleSearch = () => {
     if(search === '') {
@@ -21,6 +22,14 @@ const Trending = () => {
         const filteredCryptos = trending.filter(crypto => crypto.item.name.toLowerCase().includes(search.toLowerCase()))  
         setUpdatedCryptos(filteredCryptos)
     }
+  }
+
+  const openModal = (crypto) => {
+    setSelectedCrypto(crypto)
+  }
+
+  const closeModal = () => {
+    setSelectedCrypto(null)
   }
 
   useEffect(() => {
@@ -40,24 +49,26 @@ const Trending = () => {
     fetchTrendingCrypto()
   }, [])
 
+
   if(loading) return <Loading />
   if(error) return <NotFound />
 
   return (
-    <div className='flex text-zinc-300 bg-[#05060f] min-h-screen overscroll-none'>
+    <div className='flex text-zinc-300 bg-darkGray min-h-screen overscroll-none'>
         <Sidebar />
 
-        <div className='flex-1 pl-64 bg-[#05060f]'>
+        <div className='flex-1 pl-64 bg-darkGray'>
             <SearchNav setSearch={setSearch} handleSearch={handleSearch} updatedCryptos={updatedCryptos} />
 
             <div className='grid grid-cols-3 gap-4 p-4'>
                 {updatedCryptos.map(crypto => (
-                    <div key={crypto.item.id} className='p-5 rounded-xl bg-[#0b0c19]'>
+                    <div key={crypto.item.id} className='p-5 rounded-xl bg-darkBlue' onClick={() => openModal(crypto)}>
                         <TrendingCrypto crypto={crypto}/>
                     </div>
                 ))}
             </div>
 
+            {selectedCrypto && <TrendingModal selectedCrypto={selectedCrypto} closeModal={closeModal} />}
         </div>
     </div>
   )
