@@ -19,6 +19,8 @@ import { CiSaveDown1 } from "react-icons/ci";
 import { IoArrowUpCircle } from "react-icons/io5";
 import { IoArrowDownCircle } from "react-icons/io5";
 import { IoMdTrendingUp } from "react-icons/io";
+// import { FaFileCircleCheck } from "react-icons/fa6";
+import { LuFileDown } from "react-icons/lu";
 
 const assets = {
     logo,
@@ -39,7 +41,8 @@ const assets = {
     CiSaveDown1,
     IoArrowUpCircle,
     IoArrowDownCircle,
-    IoMdTrendingUp
+    IoMdTrendingUp,
+    LuFileDown
 }
 
 export default assets;

@@ -5,29 +5,19 @@
 @tailwind utilities;
 
 * {
-  /* font-family: "Inter", serif; */
   font-family: "Plus Jakarta Sans", serif;
-  /* font-family: "Montserrat", serif; */
-  /* color: white; */
   box-sizing: border-box;
 }
 
 .smoothTransition {
   transition: 0.2s ease-in-out;
 }
-
-/* .notfound {
-  background-size: cover;
-  background-image: radial-gradient(circle, #ffffff 1px, rgba(255, 254, 254, 0) 1px);
-} */
-
 .notfound {
   color: black;
   background-size: 40px 40px;
   background-image: radial-gradient(circle, #808080 1px, rgba(0, 0, 0, 0) 1px);
   background-color: rgb(18, 18, 18); /* Ensures consistent dark background */
   width: 100vw;
-  /* height: 100vh; */
 }
 
 .glow {
@@ -36,5 +26,5 @@
 }
 
 .glow:hover {
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9); /* Stronger glow on hover */
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
 }

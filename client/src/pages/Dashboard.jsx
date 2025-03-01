@@ -4,19 +4,20 @@ import assets from '../assets/assets'
 import Loading from '../components/Loading';
 import NotFound from './NotFound';
 import CryptoCard from '../components/CryptoCard';
+import SearchNav from '../components/SearchNav';
 
 const Dashboard = () => {
   const [cryptos, setCryptos] = useState([]);
   const [updatedCryptos, setUpdatedCryptos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [input, setInput] = useState('')
+  const [search, setSearch] = useState('')
 
   const handleSearch = () => {
-    if(input === '') {
+    if(search === '') {
       return setUpdatedCryptos(cryptos)
     } else {
-      const filteredCryptos = cryptos.filter(crypto => crypto.name.toLowerCase().includes(input.toLowerCase()))
+      const filteredCryptos = cryptos.filter(crypto => crypto.name.toLowerCase().includes(search.toLowerCase()))
       setUpdatedCryptos(filteredCryptos)
     }
   }
@@ -47,17 +48,7 @@ const Dashboard = () => {
       <Sidebar />
 
       <div className='flex-1 pl-64 bg-[#05060f]'>
-        {/* Navbar */}
-        <div className="flex justify-between items-center py-3 px-4">
-          <div className="flex gap-3 items-center">
-            <img src={assets.pfp} alt="" className="w-10 rounded-full border border-violet" />
-            <p className="font-light">Mark Johnson</p>
-          </div>
-          <div className="flex items-center justify-between border border-zinc-800 rounded-md py-2 px-3 w-[300px] gap-3">
-            <input type="text" placeholder="Search..." className="bg-transparent outline-none text-sm placeholder:text-zinc-400 flex-1" onChange={(e) => setInput(e.target.value)}/>
-            <assets.IoSearch className="text-zinc-400 cursor-pointer" onClick={handleSearch} />
-          </div>
-        </div>
+        <SearchNav setSearch={setSearch} handleSearch={handleSearch} />
 
         {/* Rendering all cryptos */}
         <div className='grid grid-cols-3 gap-4 p-4'>
@@ -68,7 +59,6 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-      
     </div>
   )
 }

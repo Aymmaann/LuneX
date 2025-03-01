@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import NotFound from './pages/NotFound'
 import FinBot from './pages/FinBot'
 import Trending from './pages/Trending'
+import Saved from './pages/Saved'
 
 const App = () => {
   return (
@@ -81,6 +82,16 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <Trending />
+          </motion.div>
+        } />
+        <Route path='/saved' element={
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 0.3 }}
+          >
+            <Saved />
           </motion.div>
         } />
         <Route path='*' element={

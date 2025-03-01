@@ -16,7 +16,7 @@ const TrendingCrypto = ({ crypto }) => {
         </div>
 
         <p className='text-sm text-zinc-500 mt-6'>Price:</p>
-        <p className='text-3xl font-medium mt-2'>${crypto.item.data.price}</p>
+        <p className='text-3xl font-medium mt-2'>${crypto.item.data.price.toFixed(5)}</p>
         
         <div className="flex items-center gap-1 mt-2">
             <div className={`rounded-md ${crypto.item.data.price_change_percentage_24h.usd > 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
