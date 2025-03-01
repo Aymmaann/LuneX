@@ -62,7 +62,7 @@ const Trending = () => {
 
             <div className='grid grid-cols-3 gap-4 p-4'>
                 {updatedCryptos.map(crypto => (
-                    <div key={crypto.item.id} className='p-5 rounded-xl bg-darkBlue' onClick={() => openModal(crypto)}>
+                    <div key={crypto.item.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer' onClick={() => openModal(crypto)}>
                         <TrendingCrypto crypto={crypto}/>
                     </div>
                 ))}

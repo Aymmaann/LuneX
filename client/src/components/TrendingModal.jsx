@@ -66,7 +66,7 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                         className="w-full mt-4"
                 />
             </div>
-            <div className='text-xs mt-4 p-4 rounded-md shadow-md'>
+            <div className='text-xs mt-4 px-4 pt-2 rounded-md shadow-md'>
                 <h3 className='text-sm font-semibold text-zinc-300 mb-3'>Market Details</h3>
                 <div className='grid grid-cols-2 gap-y-3 text-zinc-400'>
                     <p className='font-medium text-zinc-500'>Market Cap Rank:</p>
@@ -77,18 +77,6 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
 
                     <p className='font-medium text-zinc-500'>Total Volume:</p>
                     <p className='text-right text-zinc-300'>{selectedCrypto.item.data.total_volume ? selectedCrypto.item.data.total_volume : 'N/A'}</p>
-
-                    {/* <img
-                        src={selectedCrypto.item.data.sparkline}
-                        alt="Sonic Price Sparkline"
-                        className="w-full max-w-sm"
-                    /> */}
-
-                    {/* <p className='font-medium text-zinc-500'>Max Supply:</p>
-                    <p className='text-right text-zinc-300'>{selectedCrypto.item.max_supply ? selectedCrypto.max_supply.toLocaleString() : 'N/A'}</p>
-
-                    <p className='font-medium text-zinc-500'>Last Updated:</p>
-                    <p className='text-right text-zinc-300'>{new Date(selectedCrypto.item.last_updated).toLocaleString()}</p> */}
                 </div>
             </div>
 
