@@ -1,7 +1,40 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
+import { useState } from 'react'
+import AuthService from '../services/auth';
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogin = async(e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    try {
+      const response = await AuthService.login(email, password)
+      setLoading(false)
+      navigate("/")
+    } catch(error) {
+      setError(error.message)
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleLogin = async() => {
+    try {
+      const googleToken = 'token-from-google-auth';
+      const response = await AuthService.googleSignIn(googleToken)
+      navigate("/")
+    } catch(error) {
+      setError(error.message)
+    }
+  }
+
   return (
     <div className='h-screen text-white'>
         <div className='flex'>
@@ -17,7 +50,9 @@ const Login = () => {
               <div>
                 <p className='text-3xl font-medium inline-block'>Welcome back!</p>
                 <p className='text-xs font-light text-zinc-400 mt-2'>Smarter Insights for Your Crypto Journey</p>
-                <button className='mt-6 w-[300px] bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-2 smoothTransition hover:bg-borderGray'>
+                <button className='mt-6 w-[300px] bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-2 smoothTransition hover:bg-borderGray'
+                        onClick={handleGoogleLogin}
+                >
                   <img src={assets.googleLogo} alt="" className='w-[20px]'/>
                   <p className='text-sm text-gray-300'>Log in with Google</p>
                 </button>
@@ -28,15 +63,31 @@ const Login = () => {
                   <div className='flex-1 h-[2px] bg-borderGray rounded-md'></div>
                 </div>
 
-                <form>
+                <form onSubmit={handleLogin}>
                   <p className='text-sm ml-1 mt-5'>Email</p>
-                  <input type="email" placeholder='mark@gmail.com' className='w-full mt-2 bg-transparent text-sm border border-borderGray rounded-md py-2.5 px-3 outline-none placeholder:text-zinc-600'/>
+                  <input type="email" 
+                        placeholder='mark@gmail.com' 
+                        className='w-full mt-2 bg-transparent text-sm border border-borderGray rounded-md py-2.5 px-3 outline-none placeholder:text-zinc-600'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                  />
+
                   <div className='flex justify-between items-center text-sm mt-5'>
                     <p className=' ml-1'>Password</p>
                     <p className='text-violet cursor-pointer text-xs font-light'>Forgot your password?</p>
                   </div>
-                  <input type="password" placeholder='mark@12345' className='w-full mt-2 bg-transparent text-sm border border-borderGray rounded-md py-2.5 px-3 outline-none placeholder:text-zinc-600'/>
-                  <button className='mt-6 text-sm w-full bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-1 smoothTransition hover:bg-borderGray' type='submit'>Log in</button>
+                  <input type="password" 
+                        placeholder='mark@12345' 
+                        className='w-full mt-2 bg-transparent text-sm border border-borderGray rounded-md py-2.5 px-3 outline-none placeholder:text-zinc-600'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button className='mt-6 text-sm w-full bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-1 smoothTransition hover:bg-borderGray' 
+                          type='submit'
+                          disabled={loading}
+                  >
+                    {loading? "Logging in..." : "Log in"}
+                  </button>
                 </form>
 
                 <Link to="/signup">
