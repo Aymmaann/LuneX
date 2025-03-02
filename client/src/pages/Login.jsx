@@ -1,7 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AuthService from '../services/auth';
+import { useGoogleAuth } from '../services/GoogleAuth'
+import { useGoogleLogin } from '@react-oauth/google'
+import { googleAuth } from '../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -25,15 +28,26 @@ const Login = () => {
     }
   }
 
-  const handleGoogleLogin = async() => {
+  const responseGoogle = async(authResult) => {
     try {
-      const googleToken = 'token-from-google-auth';
-      const response = await AuthService.googleSignIn(googleToken)
-      navigate("/")
+      if(authResult['code']) {
+        const result = await googleAuth(authResult['code'])
+        const { name, email, image } = result.data.user
+        const token = result.data.token
+        const obj = {email,name,image,token}
+        localStorage.setItem('user-info', JSON.stringify(obj))
+        navigate("/home")
+      }
     } catch(error) {
-      setError(error.message)
+      console.error("Error while requesting google code: ", error)
     }
   }
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: 'auth-code'
+  })
 
   return (
     <div className='h-screen text-white'>
@@ -46,8 +60,8 @@ const Login = () => {
               <p className='text-xl font-light'>Lune<span className='font-semibold'>X</span></p>
             </div>
 
-            <div className='mt-36 flex justify-center'>
-              <div>
+            <div className='mt-32 flex justify-center'>
+              <div className='min-w-[300px]'>
                 <p className='text-3xl font-medium inline-block'>Welcome back!</p>
                 <p className='text-xs font-light text-zinc-400 mt-2'>Smarter Insights for Your Crypto Journey</p>
                 <button className='mt-6 w-[300px] bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-2 smoothTransition hover:bg-borderGray'
@@ -56,6 +70,7 @@ const Login = () => {
                   <img src={assets.googleLogo} alt="" className='w-[20px]'/>
                   <p className='text-sm text-gray-300'>Log in with Google</p>
                 </button>
+                {/* <div id="google-login-button" className='mt-6 bg-transparent'></div> */}
 
                 <div className='text-gray-700 flex justify-center items-center gap-2 mt-5'>
                   <div className='flex-1 h-[2px] bg-borderGray rounded-md'></div>

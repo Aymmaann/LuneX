@@ -24,7 +24,7 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                 <assets.IoMdClose className='text-white cursor-pointer text-xl smoothTransition hover:text-zinc-400' onClick={closeModal} />
             </div>
             <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-3" />
-            <div className='w-full rounded-md bg-darkGray p-3'>
+            <div className='w-full rounded-lg bg-darkGray p-3'>
                 <p className='text-xs text-zinc-400'>Price: </p>
                 <p className='text-3xl mt-1 font-medium'>${selectedCrypto.item.data.price.toFixed(10)}</p>
                 <div className='flex items-center justify-between'>
@@ -60,10 +60,9 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                         )}
                     </div>
                 </div>
-                <img
-                        src={selectedCrypto.item.data.sparkline}
-                        alt="Sonic Price Sparkline"
-                        className="w-full mt-4"
+                <img src={selectedCrypto.item.data.sparkline}
+                     alt="Sonic Price Sparkline"
+                     className="w-full mt-4"
                 />
             </div>
             <div className='text-xs mt-4 px-4 pt-2 rounded-md shadow-md'>

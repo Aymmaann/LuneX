@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
 import AuthService from '../services/auth';
+import { useGoogleAuth } from '../services/GoogleAuth'
+import { useGoogleLogin } from '@react-oauth/google'
+import { googleAuth } from '../services/api';
+
 
 const SignUp = () => {
   const [fullName, setFullName] = useState('')
@@ -15,8 +19,9 @@ const SignUp = () => {
     e.preventDefault()
     setError('')
     setLoading(true)
+
     try {
-      const response = await AuthService.register(fullName, email, password)
+      const response = await AuthService.login(email, password)
       setLoading(false)
       navigate("/")
     } catch(error) {
@@ -25,15 +30,26 @@ const SignUp = () => {
     }
   }
 
-  const handleGoogleSignUp = async() => {
+  const responseGoogle = async(authResult) => {
     try {
-      const googleToken = ''
-      const response = await AuthService.googleSignIn(googleToken)
-      navigate("/")
+      if(authResult['code']) {
+        const result = await googleAuth(authResult['code'])
+        const { name, email, image } = result.data.user
+        const token = result.data.token
+        const obj = {email,name,image,token}
+        localStorage.setItem('user-info', JSON.stringify(obj))
+        navigate("/home")
+      }
     } catch(error) {
-      setError(error.message)
+      console.error("Error while requesting google code: ", error)
     }
   }
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: 'auth-code'
+  })
 
 
   return (
@@ -48,7 +64,7 @@ const SignUp = () => {
             </div>
 
             <div className='mt-28 flex justify-center'>
-              <div>
+              <div className='min-w-[300px]'>
                 <p className='text-3xl font-medium inline-block'>Get started!</p>
                 <p className='text-xs font-light text-zinc-400 mt-2'>Smarter Insights for Your Crypto Journey</p>
                 <button className='mt-6 w-[300px] bg-[#111111] border border-borderGray rounded-md py-2.5 flex justify-center items-center gap-2 smoothTransition hover:bg-borderGray'
@@ -57,12 +73,19 @@ const SignUp = () => {
                   <img src={assets.googleLogo} alt="" className='w-[20px]'/>
                   <p className='text-sm text-gray-300'>Sign up with Google</p>
                 </button>
+                {/* <div id="google-signup-button" className='mt-6'></div> */}
 
                 <div className='text-gray-700 flex justify-center items-center gap-2 mt-5'>
                   <div className='flex-1 h-[2px] bg-borderGray rounded-md'></div>
                   <p className='text-sm font-light text-zinc-600'>OR</p>
                   <div className='flex-1 h-[2px] bg-borderGray rounded-md'></div>
                 </div>
+
+                {error && (
+                  <div className="mt-4 text-red-500 text-sm text-center">
+                    {error}
+                  </div>
+                )}
 
                 <form onSubmit={handleSignUp}>
                   <p className='text-sm ml-1 mt-5 text-zinc-300'>Name</p>

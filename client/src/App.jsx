@@ -1,5 +1,6 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion' 
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
@@ -11,10 +12,28 @@ import Trending from './pages/Trending'
 import Saved from './pages/Saved'
 
 const App = () => {
+  const GoogleAuthProvider = () => {
+      return (
+        <GoogleOAuthProvider clientId='1078438493144-7sklkbbp49detn9eh5gstfstuskcr3g4.apps.googleusercontent.com'>
+          <Login></Login>
+        </GoogleOAuthProvider>
+      )
+  }
+
   return (
     <div>
       <Routes>
         <Route path='/' element={
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 0.3 }}
+          >
+            <Navigate to="/login" />
+          </motion.div>
+        } />
+        <Route path='/home' element={
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
@@ -41,7 +60,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Login />
+            <GoogleAuthProvider />
           </motion.div>
         } />
         <Route path='/signup' element={
