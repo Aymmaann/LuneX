@@ -21,6 +21,7 @@ import { IoArrowDownCircle } from "react-icons/io5";
 import { IoMdTrendingUp } from "react-icons/io";
 import { LuFileDown } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
+import { BsArrowRight } from "react-icons/bs";
 
 const assets = {
     // Images
@@ -45,7 +46,8 @@ const assets = {
     IoArrowDownCircle,
     IoMdTrendingUp,
     LuFileDown,
-    IoMdClose
+    IoMdClose,
+    BsArrowRight
 }
 
 export default assets;

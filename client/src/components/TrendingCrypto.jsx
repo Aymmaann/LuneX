@@ -29,11 +29,7 @@ const TrendingCrypto = ({ crypto }) => {
             <p className={`font-medium text-xs ${crypto.item.data.price_change_percentage_24h.usd > 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.item.data.price_change_percentage_24h.usd > 0? crypto.item.data.price_change_percentage_24h.usd.toFixed(2) : crypto.item.data.price_change_percentage_24h.usd.toFixed(2) * -1}%</p>
         </div>
         
-        <div className='mt-4 text-zinc-500'>
-            <p className='text-sm font-light'>Market Cap Rank: <span className='font-medium text-zinc-300'>{crypto.item.market_cap_rank}</span></p>
-            {/* <p className='text-sm font-light mt-1'>Market Cap: <span className='font-medium text-zinc-300'>{crypto.item.data.market_cap}</span></p>
-            <p className='text-sm font-light mt-1'>Total Volume: <span className='font-medium text-zinc-300'>{crypto.item.data.total_volume}</span></p> */}
-        </div>
+        <p className='text-sm font-light mt-4 text-zinc-500'>Market Cap Rank: <span className='font-medium text-zinc-300'>{crypto.item.market_cap_rank}</span></p>
     </div>
   )
 }

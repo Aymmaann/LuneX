@@ -14,7 +14,7 @@ const Sidebar = () => {
         <hr className="my-3 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-3" />
 
         <div className='mt-4 h-full'>
-            <Link to='/' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/'? 'bg-[#1a1f37]' : 'bg-transparent'}`}>
+            <Link to='/home' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/home'? 'bg-[#1a1f37]' : 'bg-transparent'}`}>
                 <div className="p-2 rounded-xl">
                     <assets.FaHome className='text-[18px]' />
                 </div>

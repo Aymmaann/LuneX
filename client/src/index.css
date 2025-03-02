@@ -9,6 +9,19 @@
   box-sizing: border-box;
 }
 
+#google-login-button * {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  background-color: #111111;
+  transition: 0.2s ease-in-out;
+  font-weight: 400;
+  color: #d4d4d8;
+  border-radius: 6px;
+}
+
+#google-login-button *:hover {
+  background-color: #181818;
+}
+
 .smoothTransition {
   transition: 0.2s ease-in-out;
 }
