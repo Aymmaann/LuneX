@@ -25,7 +25,7 @@ const Navbar = () => {
             </ul>
         </div>
 
-        <div className='text-sm flex items-center gap-1.5 smoothTransition hover:text-zinc-400 cursor-pointer' onClick={handleLogout}>
+        <div className='text-sm flex items-center gap-1 smoothTransition hover:text-zinc-400 cursor-pointer' onClick={handleLogout}>
             <span>Log out</span>
             <assets.IoMdLogOut className='mt-0.5 text-[16px]' />
         </div>
