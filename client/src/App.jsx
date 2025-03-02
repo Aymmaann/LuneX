@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion' 
 import { GoogleOAuthProvider } from '@react-oauth/google'
@@ -10,8 +11,11 @@ import NotFound from './pages/NotFound'
 import FinBot from './pages/FinBot'
 import Trending from './pages/Trending'
 import Saved from './pages/Saved'
+import RefresHandler from './components/RefreshHandler'
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
   const GoogleAuthProvider = () => {
       return (
         <GoogleOAuthProvider clientId='1078438493144-7sklkbbp49detn9eh5gstfstuskcr3g4.apps.googleusercontent.com'>
@@ -20,8 +24,13 @@ const App = () => {
       )
   }
 
+  const PrivateRoute = ({ element }) => {
+    return isAuthenticated? element : <Navigate to="/login" />
+  }
+
   return (
     <div>
+      <RefresHandler setIsAuthenticated={setIsAuthenticated} />
       <Routes>
         <Route path='/' element={
           <motion.div 
@@ -40,7 +49,8 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Home />
+            <PrivateRoute element={<Home />} />
+            {/* <Home /> */}
           </motion.div>
         } />
         <Route path='/dashboard' element={
@@ -50,7 +60,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Dashboard />
+            <PrivateRoute element={<Dashboard />} />
           </motion.div>
         } />
         <Route path='/login' element={
@@ -80,7 +90,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Profile />
+            <PrivateRoute element={<Profile />} />
           </motion.div>
         } />
         <Route path='/finbot' element={
@@ -90,7 +100,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <FinBot />
+            <PrivateRoute element={<FinBot />} />
           </motion.div>
         } />
         <Route path='/trending' element={
@@ -100,7 +110,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Trending />
+            <PrivateRoute element={<Trending />} />
           </motion.div>
         } />
         <Route path='/saved' element={
@@ -110,7 +120,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <Saved />
+            <PrivateRoute element={<Saved />} />
           </motion.div>
         } />
         <Route path='*' element={
@@ -120,7 +130,7 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <NotFound />
+            <PrivateRoute element={<NotFound />} />
           </motion.div>
         } />
       </Routes>

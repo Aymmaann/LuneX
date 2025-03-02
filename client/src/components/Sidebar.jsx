@@ -1,9 +1,15 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import assets from "../assets/assets.js"
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('user-info')
+    navigate("/login")
+  }
 
   return (
     <div className='block fixed overflow-y-auto w-64 min-h-screen  bg-[#0b0c19] p-4'>
@@ -48,6 +54,17 @@ const Sidebar = () => {
                 </div>
                 <p className={`text-sm font-semibold ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`}>Profile</p>
             </Link>
+
+            {/* <div className='text-sm flex items-center gap-1.5 smoothTransition hover:-translate-y-0.5 cursor-pointer' onClick={handleLogout}>
+                <span>Log out</span>
+                <assets.BsArrowRight className='mt-1' />
+            </div> */}
+            <div className='flex items-center gap-2 p-1.5 rounded-lg' onClick={handleLogout}>
+                <div className="p-2 rounded-md">
+                    <assets.IoMdLogOut className="text-[18px] text-white" />
+                </div>
+                <p className="text-sm font-semibold text-white">Log out</p>
+            </div>
         </div>
     </div> 
   )
