@@ -68,6 +68,24 @@ app.get("/trending", async (req, res) => {
     }
 });
 
+
+app.get("/api/crypto/:id/history", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const response = await fetch(
+            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30&interval=daily&x_cg_demo_api_key=${process.env.API_KEY}`
+        );
+        if (!response.ok) throw new Error("Failed to fetch historical data");
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error("Error fetching historical data:", error);
+        res.status(500).json({ message: "Error fetching historical data" });
+    }
+});
+
+
 app.get("/", (req,res) => {
     res.send("Hello from auth server")
 })
