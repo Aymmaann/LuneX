@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import SignUp from './pages/SignUp'
-import Dashboard from './pages/Dashboard'
+import Market from './pages/Market'
 import NotFound from './pages/NotFound'
 import FinBot from './pages/FinBot'
 import Trending from './pages/Trending'
@@ -50,17 +50,16 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Home />} />
-            {/* <Home /> */}
           </motion.div>
         } />
-        <Route path='/dashboard' element={
+        <Route path='/market' element={
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <PrivateRoute element={<Dashboard />} />
+            <PrivateRoute element={<Market />} />
           </motion.div>
         } />
         <Route path='/login' element={

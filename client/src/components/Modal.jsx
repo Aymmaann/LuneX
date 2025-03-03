@@ -10,6 +10,7 @@ const Modal = ({ selectedCrypto, closeModal }) => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(selectedCrypto.current_price)
   const [error, setError] = useState(null);
+  const [selectedRange, setSelectedRange] = useState(30); 
 
   const chartData = {
     labels: history.map(entry => new Date(entry[0]).toLocaleDateString()),
@@ -24,38 +25,20 @@ const Modal = ({ selectedCrypto, closeModal }) => {
       },
     ],
   };
-  
+
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        display: false,
-      },
+      legend: { display: false },
       tooltip: {
         callbacks: {
-          label: function (context) {
-            return `${selectedCrypto.name} Price: $${context.raw.toLocaleString()}`;
-          },
+          label: context => `${selectedCrypto.name} Price: $${context.raw.toLocaleString()}`,
         },
       },
     },
     scales: {
-      x: {
-        ticks: {
-          display: false,
-        },
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        ticks: {
-          color: "#d4d4d8",
-        },
-        grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
-      },
+      x: { ticks: { display: false }, grid: { display: false } },
+      y: { ticks: { color: "#d4d4d8" }, grid: { color: "rgba(255, 255, 255, 0.1)" } },
     },
   };
 
@@ -72,19 +55,21 @@ const Modal = ({ selectedCrypto, closeModal }) => {
 
   useEffect(() => {
     const fetchHistory = async () => {
+        setLoading(true);
         try {
-            const response = await fetch(`https://crypto-api-1078438493144.us-central1.run.app/api/crypto/${selectedCrypto.id}/history`);
-            if (!response.ok) throw new Error("Failed to fetch historical data");
-            const data = await response.json();
-            setHistory(data.prices);
+          const response = await fetch(`https://crypto-api-1078438493144.us-central1.run.app/api/crypto/${selectedCrypto.id}/history?days=${selectedRange}`);
+          console.log(selectedRange)
+          if (!response.ok) throw new Error("Failed to fetch historical data");
+          const data = await response.json();
+          setHistory(data.prices);
         } catch (err) {
-            setError(err.message);
+          setError(err.message);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
     };
     fetchHistory();
-  }, [selectedCrypto])
+  }, [selectedCrypto, selectedRange])
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 text-zinc-300'>
@@ -99,9 +84,9 @@ const Modal = ({ selectedCrypto, closeModal }) => {
                 </div>
                 <assets.IoMdClose className='text-white cursor-pointer text-xl smoothTransition hover:text-zinc-400' onClick={closeModal} />
             </div>
-            <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-3" />
+            <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-1" />
             <div className='flex gap-4'>
-                <div className='min-w-[280px]'>
+                <div className='flex flex-col justify-between min-w-[280px]'>
                     <div className='w-full rounded-md bg-darkGray p-3'>
                         <p className='text-xs text-zinc-400'>Price: </p>
                         <p className='text-3xl mt-1 font-medium'>${selectedCrypto.current_price}</p>
@@ -160,23 +145,35 @@ const Modal = ({ selectedCrypto, closeModal }) => {
                             <input type="number" className='outline-none bg-transparent text-sm flex-1' defaultValue={1} onChange={(e) => handleValue(e.target.value)} />
                             <p className='text-zinc-400 text-sm'>{selectedCrypto.symbol}</p>
                         </div>
-                        <div className='flex items-center justify-between border border-zinc-800 rounded-b-md py-1.5 px-2.5 w-full'>
-                        <p className='text-sm'>$</p>
-                            <input type="number" className='outline-none bg-transparent text-sm flex-1' value={value} />
+                        <div className='flex items-center justify-between border gap-3 border-zinc-800 rounded-b-md py-1.5 px-2.5 w-full'>
+                            <p className='text-sm'>${value}</p>
+                            <p className='text-zinc-400 text-sm'>usd</p>
                         </div>
                     </div>
                 </div>
-                <div className='w-full p-3 bg-darkGray rounded-md min-w-[760px]'>
-                    {!loading? (
+                <div className='p-3 bg-darkGray rounded-md w-[760px] min-h-[432px]'>
+                    <div className="flex gap-2 mb-4">
+                        {[30, 15, 1].map(days => (
+                        <button 
+                            key={days} 
+                            className={`text-darkGray text-xs rounded-md py-1 px-2 font-semibold ${selectedRange === days ? 'bg-[#43e643] text-darkGray' : 'bg-zinc-700 text-zinc-300'}`} 
+                            onClick={() => setSelectedRange(days)}
+                        >
+                            {days === 1 ? 'Last 24 Hours' : `Last ${days} Days`}
+                        </button>
+                        ))}
+                    </div>
+
+                    {!loading ? (
                         <Line data={chartData} options={options} />
                     ) : (
                         <div className='flex flex-col items-center justify-center h-full pb-2'>
-                            <svg xmlns='http://www.w3.org/2000/svg' width="60px" viewBox='0 0 300 150'>
-                                <path fill='none' stroke='#A392F9' strokeWidth='11' strokeLinecap='round' strokeDasharray='300 385' strokeDashoffset='0' d='M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z'>
-                                    <animate attributeName='stroke-dashoffset' calcMode='spline' dur='2' values='685;-685' keySplines='0 0 1 1' repeatCount='indefinite'></animate>
-                                </path>
-                            </svg>
-                            <p className='text-zinc-200 mt-4 text-sm'>Hang tight while we fetch the graph...</p>
+                        <svg xmlns='http://www.w3.org/2000/svg' width="60px" viewBox='0 0 300 150'>
+                            <path fill='none' stroke='#A392F9' strokeWidth='11' strokeLinecap='round' strokeDasharray='300 385' strokeDashoffset='0' d='M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z'>
+                            <animate attributeName='stroke-dashoffset' calcMode='spline' dur='2' values='685;-685' keySplines='0 0 1 1' repeatCount='indefinite'></animate>
+                            </path>
+                        </svg>
+                        <p className='text-zinc-200 mt-4 text-sm'>Hang tight while we fetch the graph...</p>
                         </div>
                     )}
                 </div>

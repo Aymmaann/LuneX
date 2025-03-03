@@ -39,6 +39,7 @@ const Login = () => {
         navigate("/home")
       }
     } catch(error) {
+      console.log(authResult['code'])
       console.error("Error while requesting google code: ", error)
     }
   }
