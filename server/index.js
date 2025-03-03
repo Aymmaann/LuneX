@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 let lastFetchTime = null;
-const CACHE_DURATION = 60 * 60 * 1000; 
+const CACHE_DURATION = 5 * 60 * 1000; 
 
 app.use(cors());
 app.use(express.json());
@@ -68,12 +68,13 @@ app.get("/trending", async (req, res) => {
     }
 });
 
-
+// Retrieve the coin's price data from the past 30 days
 app.get("/api/crypto/:id/history", async (req, res) => {
     try {
         const { id } = req.params;
+        const { days } = req.query;
         const response = await fetch(
-            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30&interval=daily&x_cg_demo_api_key=${process.env.API_KEY}`
+            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily&x_cg_demo_api_key=${process.env.API_KEY}`
         );
         if (!response.ok) throw new Error("Failed to fetch historical data");
 
