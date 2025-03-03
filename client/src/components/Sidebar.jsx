@@ -27,11 +27,11 @@ const Sidebar = () => {
                 <p className='text-sm font-semibold'>Home</p>
             </Link>
 
-            <Link to='/dashboard' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/dashboard'? 'bg-[#131627]' : 'bg-transparent'}`}>
+            <Link to='/market' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/market'? 'bg-[#131627]' : 'bg-transparent'}`}>
                 <div className="p-2 rounded-md">
-                    <assets.RiDashboardFill className={`text-[18px] ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`} />
+                    <assets.RiDashboardFill className={`text-[18px] ${location.pathname === '/market'? 'text-violet' : 'text-white'}`} />
                 </div>
-                <p className={`text-sm font-semibold ${location.pathname === '/dashboard'? 'text-violet' : 'text-white'}`}>Dashboard</p>
+                <p className={`text-sm font-semibold ${location.pathname === '/market'? 'text-violet' : 'text-white'}`}>Market</p>
             </Link>
 
             <Link to='/trending' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/trending'? 'bg-[#131627]' : 'bg-transparent'}`}>
@@ -54,7 +54,7 @@ const Sidebar = () => {
                 </div>
                 <p className={`text-sm font-semibold ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`}>Profile</p>
             </Link>
-            
+
             <div className='flex items-center gap-2 p-1.5 rounded-lg cursor-pointer' onClick={handleLogout}>
                 <div className="p-2 rounded-md">
                     <assets.IoMdLogOut className="text-[18px] text-white" />

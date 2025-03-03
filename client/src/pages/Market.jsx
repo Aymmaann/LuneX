@@ -6,7 +6,7 @@ import CryptoCard from '../components/CryptoCard';
 import SearchNav from '../components/SearchNav';
 import Modal from '../components/Modal';
 
-const Dashboard = () => {
+const Market = () => {
   const [cryptos, setCryptos] = useState([]);
   const [updatedCryptos, setUpdatedCryptos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -73,4 +73,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Market

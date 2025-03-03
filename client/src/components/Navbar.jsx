@@ -19,7 +19,7 @@ const Navbar = () => {
 
         <div>
             <ul className='flex items-center gap-28 text-sm'>
-              <Link to='/dashboard' className='smoothTransition hover:text-zinc-400'>Dashboard</Link>
+              <Link to='/market' className='smoothTransition hover:text-zinc-400'>Market</Link>
               <Link to='/profile' className='smoothTransition hover:text-zinc-400'>Profile</Link>
               <Link to='/finbot' className='smoothTransition hover:text-zinc-400'>FinBot</Link>
             </ul>
