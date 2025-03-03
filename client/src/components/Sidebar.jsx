@@ -54,12 +54,8 @@ const Sidebar = () => {
                 </div>
                 <p className={`text-sm font-semibold ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`}>Profile</p>
             </Link>
-
-            {/* <div className='text-sm flex items-center gap-1.5 smoothTransition hover:-translate-y-0.5 cursor-pointer' onClick={handleLogout}>
-                <span>Log out</span>
-                <assets.BsArrowRight className='mt-1' />
-            </div> */}
-            <div className='flex items-center gap-2 p-1.5 rounded-lg' onClick={handleLogout}>
+            
+            <div className='flex items-center gap-2 p-1.5 rounded-lg cursor-pointer' onClick={handleLogout}>
                 <div className="p-2 rounded-md">
                     <assets.IoMdLogOut className="text-[18px] text-white" />
                 </div>
