@@ -73,7 +73,7 @@ const Modal = ({ selectedCrypto, closeModal }) => {
   useEffect(() => {
     const fetchHistory = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/crypto/${selectedCrypto.id}/history`);
+            const response = await fetch(`https://crypto-api-1078438493144.us-central1.run.app/api/crypto/${selectedCrypto.id}/history`);
             if (!response.ok) throw new Error("Failed to fetch historical data");
             const data = await response.json();
             setHistory(data.prices);
