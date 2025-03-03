@@ -7,7 +7,7 @@ const SearchNav = ({ setSearch, handleSearch }) => {
   return (
     <div className="flex justify-between items-center py-3 px-4">
         <div className="flex gap-3 items-center">
-            <img src={userInfo? userInfo.image : assets.pfp} alt="" className="w-10 rounded-full border border-violet" />
+            <img src={assets.pfp} alt="" className="w-10 rounded-full border border-violet" />
             <p className="font-medium">{userInfo?.name}</p>
         </div>
         <div className="flex items-center justify-between border border-zinc-800 rounded-md py-2 px-3 w-[300px] gap-3">

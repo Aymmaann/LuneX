@@ -65,7 +65,7 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                      className="w-full mt-4"
                 />
             </div>
-            <div className='text-xs mt-4 px-4 pt-2 rounded-md shadow-md'>
+            <div className='text-xs mt-4 p-2 rounded-md shadow-md'>
                 <h3 className='text-sm font-semibold text-zinc-300 mb-3'>Market Details</h3>
                 <div className='grid grid-cols-2 gap-y-3 text-zinc-400'>
                     <p className='font-medium text-zinc-500'>Market Cap Rank:</p>
