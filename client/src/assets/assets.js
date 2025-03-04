@@ -22,6 +22,7 @@ import { IoMdTrendingUp } from "react-icons/io";
 import { LuFileDown } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { IoMdLogOut } from "react-icons/io";
+import { RiRobot2Fill } from "react-icons/ri";
 
 const assets = {
     // Images
@@ -47,7 +48,8 @@ const assets = {
     IoMdTrendingUp,
     LuFileDown,
     IoMdClose,
-    IoMdLogOut
+    IoMdLogOut,
+    RiRobot2Fill
 }
 
 export default assets;
