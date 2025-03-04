@@ -1,5 +1,6 @@
 # Ignore environment variables
 .env
+lunex-452314-801953268973.json
 
 # Ignore node modules
 node_modules/

@@ -2,11 +2,9 @@ import "dotenv/config";
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors"; 
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { OAuth2Client } from 'google-auth-library';
 import router from './routes/authRouter.js';
 import './models/dbConnection.js';
+import { saveCoin, getUserCoins } from './controllers/coinController.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -86,6 +84,11 @@ app.get("/api/crypto/:id/history", async (req, res) => {
     }
 });
 
+// Save a coin to the Cloud Datastore
+app.post("/api/save-coin", saveCoin);
+
+// Display the saved coins
+app.get("/api/saved-coins", getUserCoins);
 
 app.get("/", (req,res) => {
     res.send("Hello from auth server")
@@ -94,3 +97,4 @@ app.get("/", (req,res) => {
 app.use('/auth', router);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
