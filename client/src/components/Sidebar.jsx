@@ -48,12 +48,19 @@ const Sidebar = () => {
                 <p className={`text-sm font-semibold ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`}>Saved</p>
             </Link>
 
-            <Link to='/profile' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/profile'? 'bg-[#131627]' : 'bg-transparent'}`}>
+            <Link to='/finbot' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/finbot'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <div className="p-2 rounded-md">
+                    <assets.RiRobot2Fill className={`text-[18px] ${location.pathname === '/finbot'? 'text-violet' : 'text-white'}`} />
+                </div>
+                <p className={`text-sm font-semibold ${location.pathname === '/finbot'? 'text-violet' : 'text-white'}`}>FinBot</p>
+            </Link>
+
+            {/* <Link to='/profile' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/profile'? 'bg-[#131627]' : 'bg-transparent'}`}>
                 <div className="p-2 rounded-md">
                     <assets.MdPerson className={`text-[18px] ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`} />
                 </div>
                 <p className={`text-sm font-semibold ${location.pathname === '/profile'? 'text-violet' : 'text-white'}`}>Profile</p>
-            </Link>
+            </Link> */}
 
             <div className='flex items-center gap-2 p-1.5 rounded-lg cursor-pointer' onClick={handleLogout}>
                 <div className="p-2 rounded-md">

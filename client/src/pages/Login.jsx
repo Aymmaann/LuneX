@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AuthService from '../services/auth';
 import { useGoogleAuth } from '../services/GoogleAuth'
 import { useGoogleLogin } from '@react-oauth/google'
