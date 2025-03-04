@@ -34,12 +34,32 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 
 - **Firestore (Google Cloud):**  
   - Storing user-tracked cryptocurrencies for seamless cross-device access.
-  
+
 - **BigQuery (Google Cloud):**  
-  - Analyzing historical crypto data and volatility patterns.
-  
+  - Analyzing historical crypto data and volatility patterns.  
+  - Identifying correlations between trading volume and price changes.  
+  - Calculating moving averages and trend analysis for better market insights.  
+  - Aggregating data for custom user reports (e.g., most volatile assets over time).  
+
+- **Vertex AI (Google Cloud):**  
+  - Calculating **Volatility Score** to assess how much a cryptocurrency's price fluctuates.  
+  - Predicting **Expected Price Rise/Drop** based on historical trends and market conditions.  
+  - **Trend Prediction** (Bullish, Bearish, Neutral) using ML models trained on past price actions.  
+
+- **AWS EC2 (Amazon Web Services):**  
+  - Hosting the backend services and API for real-time cryptocurrency tracking.  
+  - Ensuring scalability and performance for high-traffic data requests.  
+
 - **AWS SES (Simple Email Service):**  
-  - Sending automated alerts for sudden price changes.
+  - Sending automated alerts for sudden price changes.  
+
+### Useful BigQuery Analyses for Users  
+
+- **Price Correlation Analysis:** Find relationships between different coins (e.g., how Bitcoin’s price affects altcoins).  
+- **Whale Activity Detection:** Track large transactions and how they impact price volatility.  
+- **Seasonal Trends:** Identify patterns like "weekend dips" or "Monday recoveries" based on historical data.  
+- **Market Sentiment Analysis:** If combined with news/social media data, gauge sentiment around a coin.  
+- **Exchange Liquidity Analysis:** Compare spreads across exchanges to find the best trading opportunities.  
 
 ## Installation & Setup
 
