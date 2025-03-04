@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
-    <div className='w-full h-screen text-zinc-200 bg-[url("/Users/ayman/Desktop/Lunex/client/src/assets/images/error-bg.jpg")] bg-top'>
+    <div className='w-full h-screen text-zinc-200 bg-[url("/src/assets/images/error-bg.jpg")] bg-top'>
       <Navbar />
 
       <div className='w-[750px] mx-auto mt-24'>

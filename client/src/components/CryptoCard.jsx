@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import assets from '../assets/assets'
+import axios from 'axios'
 
 const CryptoCard = ({ crypto }) => {
+    const [isSaved, setIsSaved] = useState(false)
+
+    const handleSave = async () => {
+      const userInfo = JSON.parse(localStorage.getItem('user-info'))
+ 
+      if(!userInfo || !userInfo.token) {
+        alert('Please log in to save coins')
+        return
+      }
+ 
+      try {
+        const response = await axios.post('http://localhost:8080/api/save-coin', 
+          { coin: crypto },
+          {
+            headers: {
+              'Authorization': `Bearer ${userInfo.token}`
+            }
+          }
+        )
+        setIsSaved(true)
+        alert('Coin saved successfully!')
+      } catch (error) {
+        console.error('Full error object:', error);
+        console.error('Error response:', error.response);
+        alert(`Failed to save coin: ${error.response?.data?.message || error.message}`)
+      }
+    }
+
   return (
     <div>
         <div className='flex justify-between items-center'>
@@ -12,7 +41,7 @@ const CryptoCard = ({ crypto }) => {
                 <p className='text-sm font-light'>{crypto.name} ({crypto.symbol})</p>
                 </div>
             </div>
-            <assets.CiSaveDown1 className='text-zinc-500 text-[20px] cursor-pointer' />
+            <assets.CiSaveDown1 className={`text-[20px] cursor-pointer ${isSaved ? 'text-green-500' : 'text-zinc-500'}`}  onClick={handleSave} />
         </div>
 
         <p className='text-sm text-zinc-500 mt-6'>Price:</p>

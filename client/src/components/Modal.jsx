@@ -58,7 +58,6 @@ const Modal = ({ selectedCrypto, closeModal }) => {
         setLoading(true);
         try {
           const response = await fetch(`https://crypto-api-1078438493144.us-central1.run.app/api/crypto/${selectedCrypto.id}/history?days=${selectedRange}`);
-          console.log(selectedRange)
           if (!response.ok) throw new Error("Failed to fetch historical data");
           const data = await response.json();
           setHistory(data.prices);
