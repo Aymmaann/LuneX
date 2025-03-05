@@ -50,6 +50,7 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Home />} />
+            {/* <Home /> */}
           </motion.div>
         } />
         <Route path='/market' element={
@@ -60,6 +61,7 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Market />} />
+            {/* <Market /> */}
           </motion.div>
         } />
         <Route path='/login' element={
@@ -110,6 +112,7 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Trending />} />
+            {/* <Trending /> */}
           </motion.div>
         } />
         <Route path='/saved' element={
@@ -119,7 +122,8 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <PrivateRoute element={<Saved />} />
+            {/* <PrivateRoute element={<Saved />} /> */}
+            <Saved />
           </motion.div>
         } />
         <Route path='*' element={

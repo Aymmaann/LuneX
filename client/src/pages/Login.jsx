@@ -35,10 +35,14 @@ const Login = () => {
         const { name, email, image } = result.data.user
         const token = result.data.token
         const obj = {email,name,image,token}
-        localStorage.setItem('user-info', JSON.stringify(obj))
+        localStorage.setItem('user-info', JSON.stringify(obj));
+        localStorage.setItem('token', token);
+        console.log(localStorage.getItem("token")); 
+        console.log(localStorage.getItem("user-info"));
         navigate("/home")
       }
     } catch(error) {
+      console.log(authResult['code'])
       console.error("Error while requesting google code: ", error)
     }
   }

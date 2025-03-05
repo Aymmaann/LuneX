@@ -14,7 +14,8 @@ const CryptoCard = ({ crypto }) => {
       }
  
       try {
-        const response = await axios.post('http://localhost:8080/api/save-coin', 
+        console.log('Crypto ID: ', crypto.id)
+        const response = await axios.post('https://crypto-api-1078438493144.us-central1.run.app/api/save-coin', 
           { coin: crypto },
           {
             headers: {
@@ -60,6 +61,7 @@ const CryptoCard = ({ crypto }) => {
             <p className='text-sm font-light'>24H High: <span className='font-medium text-zinc-200'>${crypto.high_24h}</span></p>
             <p className='text-sm font-light'>24H Low: <span className='font-medium text-zinc-200'>${crypto.low_24h}</span></p>
         </div>
+        {/* <button className='mt-4 py-2 px-4 bg-violet text-[#262063] rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-zinc-300'>More info</button> */}
     </div>
   )
 }
