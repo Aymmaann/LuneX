@@ -3,33 +3,34 @@ import assets from '../assets/assets'
 import axios from 'axios'
 
 const TrendingCrypto = ({ crypto }) => {
-    const [isSaved, setIsSaved] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
 
-    const handleSave = async () => {
-      const userInfo = JSON.parse(localStorage.getItem('user-info'))
- 
-      if(!userInfo || !userInfo.token) {
-        alert('Please log in to save coins')
-        return
-      }
- 
-      try {
-        const response = await axios.post('http://localhost:8080/api/save-coin', 
-          { coin: crypto },
-          {
-            headers: {
-              'Authorization': `Bearer ${userInfo.token}`
-            }
-          }
-        )
-        setIsSaved(true)
-        alert('Coin saved successfully!')
-      } catch (error) {
-        console.error('Full error object:', error);
-        console.error('Error response:', error.response);
-        alert(`Failed to save coin: ${error.response?.data?.message || error.message}`)
-      }
+  const handleSave = async () => {
+    const userInfo = JSON.parse(localStorage.getItem('user-info'))
+
+    if(!userInfo || !userInfo.token) {
+      alert('Please log in to save coins')
+      return
     }
+
+    try {
+      console.log('Crypto ID: ', crypto.id)
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/save-coin`, 
+        { coin: crypto },
+        {
+          headers: {
+            'Authorization': `Bearer ${userInfo.token}`
+          }
+        }
+      )
+      setIsSaved(true)
+      alert('Coin saved successfully!')
+    } catch (error) {
+      console.error('Full error object:', error);
+      console.error('Error response:', error.response);
+      alert(`Failed to save coin: ${error.response?.data?.message || error.message}`)
+    }
+  }
 
 
   return (

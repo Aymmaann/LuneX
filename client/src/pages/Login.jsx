@@ -32,9 +32,9 @@ const Login = () => {
     try {
       if(authResult['code']) {
         const result = await googleAuth(authResult['code'])
-        const { name, email, image } = result.data.user
+        const { id, name, email, image } = result.data.user
         const token = result.data.token
-        const obj = {email,name,image,token}
+        const obj = {id,email,name,image,token}
         localStorage.setItem('user-info', JSON.stringify(obj));
         localStorage.setItem('token', token);
         console.log(localStorage.getItem("token")); 
