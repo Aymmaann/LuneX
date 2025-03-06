@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL: 'https://crypto-api-1078438493144.us-central1.run.app', 
+    // baseURL: 'http://localhost:8080',
 })
 
 export const googleAuth = (code) => api.get(`/auth/google?code=${code}`)
@@ -13,5 +14,14 @@ export const saveCoin = (coin) => {
         headers: {
             'Authorization': `Bearer ${userInfo.token}`
         }
+    })
+}
+
+export const getUserCoins = () => {
+    const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    return api.get('/api/get-user-coins', { 
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     })
 }

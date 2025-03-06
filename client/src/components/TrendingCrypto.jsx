@@ -1,37 +1,72 @@
 import React, { useState } from 'react'
 import assets from '../assets/assets'
 import axios from 'axios'
+import Toast from '../components/Toast';
+import { getUserCoins } from '../services/api';
 
 const TrendingCrypto = ({ crypto }) => {
-  const [isSaved, setIsSaved] = useState(false)
+  const [isSaved, setIsSaved] = useState(false);
+  const [showToastMsg, setShowToastMsg] = useState({
+      isShown: false,
+      message: "",
+      type: "success",
+  });
+
+  const handleCloseToast = () => {
+      setShowToastMsg({
+          isShown: false,
+          message: "",
+      });
+  };
+
+  const showToastMessage = (message, type) => {
+      setShowToastMsg({
+          isShown: true,
+          message,
+          type,
+      });
+  };
 
   const handleSave = async () => {
-    const userInfo = JSON.parse(localStorage.getItem('user-info'))
+      const userInfo = JSON.parse(localStorage.getItem('user-info'));
+      if (!userInfo || !userInfo.token) {
+          showToastMessage('Please log in to save coins', 'error');
+          return;
+      }
+      try {
+          console.log('Crypto ID: ', crypto.id);
+          const response = await axios.post(`https://crypto-api-1078438493144.us-central1.run.app/api/save-coin`,
+              { coin: crypto },
+              {
+                  headers: {
+                      'Authorization': `Bearer ${userInfo.token}`
+                  }
+              }
+          );
+          setIsSaved(true);
+          showToastMessage('Coin saved successfully!', 'success');
+      } catch (error) {
+          console.error('Full error object:', error);
+          console.error('Error response:', error.response);
+          showToastMessage('Failed to save coin', 'error');
+      }
+  };
 
-    if(!userInfo || !userInfo.token) {
-      alert('Please log in to save coins')
-      return
-    }
-
-    try {
-      console.log('Crypto ID: ', crypto.id)
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/save-coin`, 
-        { coin: crypto },
-        {
-          headers: {
-            'Authorization': `Bearer ${userInfo.token}`
+  useEffect(() => {
+      const fetchSavedCoins = async () => {
+          try {
+              const response = await getUserCoins();
+              const savedCoins = response.data;
+              console.log("Saved Coins Data:", savedCoins);
+              const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
+              setIsSaved(isCryptoSaved);
+          } catch (error) {
+              console.error('Error fetching saved coins:', error);
           }
-        }
-      )
-      setIsSaved(true)
-      alert('Coin saved successfully!')
-    } catch (error) {
-      console.error('Full error object:', error);
-      console.error('Error response:', error.response);
-      alert(`Failed to save coin: ${error.response?.data?.message || error.message}`)
-    }
-  }
+      };
 
+      fetchSavedCoins();
+  }, [crypto.id]);
 
   return (
     <div className='text-zinc-300'>
@@ -61,6 +96,13 @@ const TrendingCrypto = ({ crypto }) => {
         </div>
         
         <p className='text-sm font-light mt-4 text-zinc-500'>Market Cap Rank: <span className='font-medium text-zinc-300'>{crypto.item.market_cap_rank}</span></p>
+
+      <Toast
+        isShown={showToastMsg.isShown}
+        message={showToastMsg.message}
+        type={showToastMsg.type}
+        onClose={handleCloseToast}
+      />
     </div>
   )
 }
