@@ -4,6 +4,7 @@ import assets from '../assets/assets'
 import NotFound from './NotFound';
 import Loading from '../components/Loading';
 import SearchNav from '../components/SearchNav';
+import SavedCard from '../components/SavedCard';
 
 const Saved = () => {
   const [saved, setSaved] = useState([]);
@@ -29,7 +30,7 @@ useEffect(() => {
       if(!token) {
         throw new Error("User not authenticated")
       }
-      const response = await fetch("https://crypto-api-1078438493144.us-central1.run.app/getUserCoins", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-user-coins`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,22 +62,20 @@ return (
         <Sidebar />
 
         <div className='flex-1 pl-64 bg-[#05060f]'>
-            <SearchNav setSearch={setSearch} handleSearch={handleSearch} />
+          <SearchNav setSearch={setSearch} handleSearch={handleSearch} />
 
-            <div className="p-5">
-              <h2 className="text-2xl font-bold mb-4">Your Saved Cryptos</h2>
-
-              {saved.length > 0 ? (
-                <ul>
-                  {saved.map((crypto) => (
-                    <li key={crypto.id} className="p-3 bg-gray-800 mb-2 rounded-md">
-                      {crypto.name} ({crypto.symbol})
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No saved cryptos found.</p>
-              )}
+          <div className="">
+            {saved.length>0? (
+              <div className='grid grid-cols-2 gap-4 p-4'>
+              {saved.map((crypto) => (
+                <div key={crypto.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer'>
+                  <SavedCard crypto={crypto} />
+                </div>
+              ))}
+            </div>
+            ) : (
+              <p>No saved cryptos found</p>
+            )}
           </div>
         </div>
     </div>
