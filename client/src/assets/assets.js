@@ -25,6 +25,8 @@ import { IoMdLogOut } from "react-icons/io";
 import { RiRobot2Fill } from "react-icons/ri";
 import { FaMoon } from "react-icons/fa6";
 import { FaSun } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
+import { LuCheck } from "react-icons/lu";
 
 const assets = {
     // Images
@@ -53,7 +55,9 @@ const assets = {
     IoMdLogOut,
     RiRobot2Fill,
     FaMoon,
-    FaSun
+    FaSun,
+    MdClose,
+    LuCheck
 }
 
 export default assets;

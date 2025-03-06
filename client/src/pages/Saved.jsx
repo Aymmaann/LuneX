@@ -13,49 +13,49 @@ const Saved = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   
-const handleSearch = () => {
-    if(search === '') {
-      return setSaved(cryptos)
-    } else {
-      const filteredCryptos = saved.filter((crypto) => crypto.name.toLowerCase().includes(search.toLowerCase()))
-      setSaved(filteredCryptos)
-    }
-}
-
-useEffect(() => {
-  const fetchSavedCryptos = async() => {
-    try {
-      const token = localStorage.getItem("token")
-      console.log(token)
-      if(!token) {
-        throw new Error("User not authenticated")
+  const handleSearch = () => {
+      if(search === '') {
+        return setSaved(cryptos)
+      } else {
+        const filteredCryptos = saved.filter((crypto) => crypto.name.toLowerCase().includes(search.toLowerCase()))
+        setSaved(filteredCryptos)
       }
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-user-coins`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": 'application/json',
-        }
-      })
-      if(!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const data = await response.json()
-      setSaved(data)
-      console.log(data)
-    } catch(err) {
-      console.log(localStorage.getItem("token"))
-      console.error("Error fetching saved cryptos: ", err)
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
   }
-  fetchSavedCryptos();
-}, [])
 
-if(loading) return <Loading />
-if(error) return <NotFound />
+  useEffect(() => {
+    const fetchSavedCryptos = async() => {
+      try {
+        const token = localStorage.getItem("token")
+        console.log(token)
+        if(!token) {
+          throw new Error("User not authenticated")
+        }
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-user-coins`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": 'application/json',
+          }
+        })
+        if(!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json()
+        setSaved(data)
+        console.log(data)
+      } catch(err) {
+        console.log(localStorage.getItem("token"))
+        console.error("Error fetching saved cryptos: ", err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchSavedCryptos();
+  }, [])
+
+  if(loading) return <Loading />
+  if(error) return <NotFound />
 
 return (
     <div className='flex text-zinc-300 bg-[#05060f] min-h-screen overscroll-none'>
