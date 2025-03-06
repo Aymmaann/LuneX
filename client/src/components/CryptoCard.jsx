@@ -1,4 +1,3 @@
-// CryptoCard.jsx
 import React, { useEffect, useState, memo } from 'react';
 import assets from '../assets/assets';
 import axios from 'axios';
@@ -36,7 +35,7 @@ const CryptoCard = ({ crypto }) => {
         }
         try {
             console.log('Crypto ID: ', crypto.id);
-            const response = await axios.post(`https://crypto-api-1078438493144.us-central1.run.app/api/save-coin`,
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/save-coin`,
                 { coin: crypto },
                 {
                     headers: {
@@ -58,7 +57,6 @@ const CryptoCard = ({ crypto }) => {
             try {
                 const response = await getUserCoins();
                 const savedCoins = response.data;
-                console.log("Saved Coins Data:", savedCoins);
                 const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
                 setIsSaved(isCryptoSaved);
             } catch (error) {

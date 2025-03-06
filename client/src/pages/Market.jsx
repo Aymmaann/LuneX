@@ -34,7 +34,7 @@ const Market = () => {
     useEffect(() => {
         const fetchCryptos = async () => {
             try {
-                const response = await fetch("https://crypto-api-1078438493144.us-central1.run.app/api/cryptos");
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cryptos`);
                 if (!response.ok) throw new Error("Failed to fetch data");
                 const data = await response.json();
                 setCryptos(data);

@@ -35,7 +35,7 @@ const Trending = () => {
   useEffect(() => {
     const fetchTrendingCrypto = async() => {
         try {
-            const response = await fetch("https://crypto-api-1078438493144.us-central1.run.app/trending")
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/trending`)
             if(!response.ok) throw new Error("Failed to fetch data");
             const data = await response.json()
             setTrending(data)
