@@ -1,10 +1,6 @@
 import fetch from 'node-fetch'
 import "dotenv/config";
 
-// Function to fetch historical price data
-// const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-// Function to fetch historical price data with detailed logging
 async function fetchHistoricalData(coinId) {
   try {
     const url = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=90&x_cg_demo_api_key=${process.env.API_KEY}`;
@@ -39,11 +35,8 @@ async function fetchHistoricalData(coinId) {
 
 async function getCryptoAnalysis(coinId) {
     try {
-    //   await delay(1000);
-      
       const prices = await fetchHistoricalData(coinId);
-      
-      // Only proceed if we have price data
+
       if (prices.length === 0) {
         console.log(`No price data available for ${coinId}, returning default values`);
         return { volatility: 0, risk: 10, trend: "Unknown" };
@@ -63,9 +56,6 @@ async function getCryptoAnalysis(coinId) {
       if (percentageChange > 5) trend = "Bullish";
       else if (percentageChange < -5) trend = "Bearish";
       else trend = "Neutral";
-      
-      // Add another delay before the second API call
-    //   await delay(1000);
       
       // Get coin details for market cap and price change
       const url = `https://api.coingecko.com/api/v3/coins/${coinId}?x_cg_demo_api_key=${process.env.API_KEY}`;
