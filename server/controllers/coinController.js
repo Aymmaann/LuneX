@@ -1,13 +1,85 @@
 import { Datastore } from '@google-cloud/datastore';
 import jwt from 'jsonwebtoken';
 import "dotenv/config";
-import { getCryptoAnalysis } from '../services/cryptoServices.js';
+import { getCryptoAnalysis, getCoinDetails } from '../services/cryptoServices.js';
 
 const datastore = new Datastore({
   projectId: process.env.GCP_PROJECT_ID, 
   databaseId: process.env.GCP_DATABASE_ID_SAVED_CRYPTO,        
   keyFilename: process.env.GCP_KEY_FILE 
 });
+
+export const updateCryptoValues = async (req, res) => {
+  try {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ message: 'No token provided' });
+      }
+
+      let decoded;
+      try {
+          decoded = jwt.verify(token, process.env.JWT_SECRET);
+      } catch (tokenError) {
+          console.error('Token verification error:', tokenError);
+          return res.status(401).json({ message: 'Invalid or expired token' });
+      }
+
+      const userEmail = decoded.email;
+      if (!userEmail) {
+          return res.status(400).json({ message: "User email not found in token" });
+      }
+
+      const query = datastore.createQuery('UserCoin').filter('userEmail', '=', userEmail);
+      const [coins] = await datastore.runQuery(query);
+
+      for (const coin of coins) {
+          const { id: coinId } = coin;
+
+          try {
+              const { volatility, risk, trend } = await getCryptoAnalysis(coinId);
+              const coinDetails = await getCoinDetails(coinId);
+
+              if (!coinDetails) {
+                  console.error(`Failed to get coin details for ${coinId}`);
+                  continue;
+              }
+
+              const currentPrice = coinDetails.market_data.current_price?.usd || 0;
+
+              const key = datastore.key(['UserCoin', `${userEmail}_${coinId}`]);
+              const entity = {
+                  key: key,
+                  data: {
+                      ...coin,
+                      current_price: currentPrice,
+                      volatility_score: volatility,
+                      prediction: trend,
+                      risk_score: risk
+                  }
+              };
+              await datastore.save(entity);
+              console.log(`Updated values for ${coinId} for user ${userEmail}`);
+
+          } catch (analysisError) {
+              console.error(`Error updating ${coinId} for user ${userEmail}:`, analysisError);
+          }
+      }
+
+      res.status(200).json({ message: `Crypto values updated successfully for ${userEmail}` });
+  } catch (error) {
+      console.error('Error updating crypto values:', error);
+      res.status(500).json({ message: 'Failed to update crypto values', error: error.message });
+  }
+};
+
+export const triggerCryptoUpdate = async (req, res) => {
+  try {
+      await updateCryptoValues(req, res);
+  } catch (error) {
+      console.error('Error triggering crypto update:', error);
+      res.status(500).json({ message: 'Failed to trigger crypto update', error: error.message });
+  }
+};
 
 export const saveCoin = async (req, res) => {
     try {
@@ -122,5 +194,7 @@ export const getUserCoins = async (req, res) => {
 
 export default {
   saveCoin,
-  getUserCoins
+  getUserCoins,
+  updateCryptoValues,
+  triggerCryptoUpdate
 };
