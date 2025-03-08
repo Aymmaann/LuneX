@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import assets from '../assets/assets'
 
 const SavedCard = ({ crypto }) => {
@@ -30,4 +30,4 @@ const SavedCard = ({ crypto }) => {
   )
 }
 
-export default SavedCard
+export default memo(SavedCard)
