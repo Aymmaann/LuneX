@@ -56,7 +56,7 @@ async function getCryptoAnalysis(coinId) {
       if (percentageChange > 5) trend = "Bullish";
       else if (percentageChange < -5) trend = "Bearish";
       else trend = "Neutral";
-      
+
       // Get coin details for market cap and price change
       const url = `https://api.coingecko.com/api/v3/coins/${coinId}?x_cg_demo_api_key=${process.env.API_KEY}`;
       
@@ -102,5 +102,24 @@ async function getCryptoAnalysis(coinId) {
     }
 }
 
+async function getCoinDetails(coinId) {
+    try {
+        const url = `https://api.coingecko.com/api/v3/coins/${coinId}?x_cg_demo_api_key=${process.env.API_KEY}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`CoinGecko API error (${response.status}) for ${coinId}: ${errorText}`);
+        }
+        const data = await response.json();
+        if (!data.market_data) {
+            throw new Error('No market_data in API response');
+        }
+        return data;
+    } catch (error) {
+        console.error(`Error in getCoinDetails for ${coinId}:`, error);
+        return null;
+    }
+}
+
 // Export functions
-export { fetchHistoricalData, getCryptoAnalysis }
+export { fetchHistoricalData, getCryptoAnalysis, getCoinDetails }

@@ -3,7 +3,7 @@ import express from "express";
 import fetch from "node-fetch";
 import cors from "cors"; 
 import router from './routes/authRouter.js';
-import { saveCoin, getUserCoins } from './controllers/coinController.js';
+import { saveCoin, getUserCoins, updateCryptoValues, triggerCryptoUpdate } from './controllers/coinController.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -92,6 +92,10 @@ app.get("/api/get-user-coins", getUserCoins);
 app.get("/", (req,res) => {
     res.send("Hello from auth server")
 })
+
+app.post("/update-crypto-value", updateCryptoValues)
+
+app.get("/api/trigger-crypto-update", triggerCryptoUpdate)
 
 app.use('/auth', router);
 
