@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import assets from '../assets/assets'
 import NotFound from './NotFound';
@@ -12,6 +12,7 @@ const Saved = () => {
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const fetchInterval = useRef(null)
   
   const handleSearch = () => {
       if(search === '') {
@@ -22,36 +23,57 @@ const Saved = () => {
       }
   }
 
+  const fetchSavedCryptos = async() => {
+    try {
+      const token = localStorage.getItem("token")
+      if(!token) {
+        throw new Error("User not authenticated")
+      }
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-user-coins`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": 'application/json',
+        }
+      })
+      if(!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json()
+      setSaved(data)
+
+      localStorage.setItem("saved-cryptos", JSON.stringify({
+        data,
+        timestamp: Date.now()
+      }))
+
+    } catch(err) {
+      console.error("Error fetching saved cryptos: ", err)
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    const fetchSavedCryptos = async() => {
-      try {
-        const token = localStorage.getItem("token")
-        console.log(token)
-        if(!token) {
-          throw new Error("User not authenticated")
-        }
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get-user-coins`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": 'application/json',
-          }
-        })
-        if(!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json()
+    const cachedData = localStorage.getItem("saved-cryptos")
+    if(cachedData) {
+      const { data, timestamp } = JSON.parse(cachedData)
+      const now = Date.now()
+      const cacheDuration = 5*60*1000
+
+      if(now - timestamp < cacheDuration) {
         setSaved(data)
-        console.log(data)
-      } catch(err) {
-        console.log(localStorage.getItem("token"))
-        console.error("Error fetching saved cryptos: ", err)
-        setError(err.message)
-      } finally {
         setLoading(false)
+        return
       }
     }
     fetchSavedCryptos();
+    fetchInterval.current = setInterval(fetchSavedCryptos, 5*60*1000)
+
+    return  () => {
+      clearInterval(fetchInterval.current)
+    }
   }, [])
 
   if(loading) return <Loading />

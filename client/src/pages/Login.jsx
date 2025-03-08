@@ -37,8 +37,6 @@ const Login = () => {
         const obj = {id,email,name,image,token}
         localStorage.setItem('user-info', JSON.stringify(obj));
         localStorage.setItem('token', token);
-        // console.log(localStorage.getItem("token")); 
-        // console.log(localStorage.getItem("user-info"));
         navigate("/home")
       }
     } catch(error) {
