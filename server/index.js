@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors"; 
-import router from './routes/authRouter.js';
+import router from './routes/router.js';
 import { 
     saveCoin, 
     getUserCoins, 
