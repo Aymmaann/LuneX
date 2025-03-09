@@ -17,7 +17,7 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
   - **Multi-Cloud Integration:** Store user-selected cryptos in Firestore, analyze in BigQuery, and use AWS services for email notifications when significant price fluctuations occur.
 
  
-  ## Cloud Services Used
+## Cloud Services Used
 
 - **OAuth (Google Cloud):**  
   - Implemented OAuth for authentication, ensuring secure user login and authorization.
@@ -31,8 +31,12 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 - **Google Cloud Secret Manager:**  
   - Used Google Cloud Secret Manager for securely storing sensitive environment variables, such as API keys and credentials.
 
+- **Google Cloud Scheduler:**  
+  - Configured Cloud Scheduler to trigger periodic updates of cryptocurrency values in the database every 5 minutes.
+
 - **CoinGecko API:**  
   - Fetching real-time cryptocurrency market data, including prices, historical trends, and market cap.
+
 
 
 ### Upcoming Cloud Services
