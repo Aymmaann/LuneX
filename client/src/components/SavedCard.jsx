@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import assets from '../assets/assets'
+import Modal from './Modal'
 
 const SavedCard = ({ crypto }) => {
   return (
