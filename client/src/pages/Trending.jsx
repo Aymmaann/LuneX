@@ -4,7 +4,6 @@ import Loading from '../components/Loading';
 import NotFound from './NotFound';
 import TrendingCrypto from '../components/TrendingCrypto';
 import SearchNav from '../components/SearchNav';
-import Modal from '../components/Modal';
 import TrendingModal from '../components/TrendingModal';
 
 const Trending = () => {
@@ -13,7 +12,6 @@ const Trending = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
-  const [selectedCrypto, setSelectedCrypto] = useState(null)
 
   const handleSearch = () => {
     if(search === '') {
@@ -22,14 +20,6 @@ const Trending = () => {
         const filteredCryptos = trending.filter(crypto => crypto.item.name.toLowerCase().includes(search.toLowerCase()))  
         setUpdatedCryptos(filteredCryptos)
     }
-  }
-
-  const openModal = (crypto) => {
-    setSelectedCrypto(crypto)
-  }
-
-  const closeModal = () => {
-    setSelectedCrypto(null)
   }
 
   useEffect(() => {
@@ -62,13 +52,11 @@ const Trending = () => {
 
             <div className='grid grid-cols-3 gap-4 p-4'>
                 {updatedCryptos.map(crypto => (
-                    <div key={crypto.item.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer' onClick={() => openModal(crypto)}>
+                    <div key={crypto.item.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer'>
                         <TrendingCrypto crypto={crypto}/>
                     </div>
                 ))}
             </div>
-
-            {selectedCrypto && <TrendingModal selectedCrypto={selectedCrypto} closeModal={closeModal} />}
         </div>
     </div>
   )
