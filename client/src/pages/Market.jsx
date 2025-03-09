@@ -4,7 +4,6 @@ import Loading from '../components/Loading';
 import NotFound from './NotFound';
 import CryptoCard from '../components/CryptoCard';
 import SearchNav from '../components/SearchNav';
-import Modal from '../components/Modal';
 
 const Market = () => {
     const [cryptos, setCryptos] = useState([]);
@@ -12,7 +11,6 @@ const Market = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
-    const [selectedCrypto, setSelectedCrypto] = useState(null);
 
     const handleSearch = () => {
         if (search === '') {
@@ -60,13 +58,12 @@ const Market = () => {
 
                 <div className='grid grid-cols-3 gap-4 p-4'>
                     {updatedCryptos.map((crypto) => (
-                        <div key={crypto.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer' onClick={() => openModal(crypto)}>
+                        <div key={crypto.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer'>
                             <CryptoCard crypto={crypto} />
                         </div>
                     ))}
                 </div>
             </div>
-            {selectedCrypto && <Modal selectedCrypto={selectedCrypto} closeModal={closeModal} />}
         </div>
     );
 };

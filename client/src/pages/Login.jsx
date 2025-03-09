@@ -1,10 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
 import { useState } from 'react'
-import AuthService from '../services/auth';
-import { useGoogleAuth } from '../services/GoogleAuth'
-import { useGoogleLogin } from '@react-oauth/google'
 import { googleAuth } from '../services/api';
+import AuthService from '../services/auth';
+import { useGoogleLogin } from '@react-oauth/google'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -29,6 +28,7 @@ const Login = () => {
   }
 
   const responseGoogle = async(authResult) => {
+    setLoading(true);
     try {
       if(authResult['code']) {
         const result = await googleAuth(authResult['code'])
@@ -37,11 +37,14 @@ const Login = () => {
         const obj = {id,email,name,image,token}
         localStorage.setItem('user-info', JSON.stringify(obj));
         localStorage.setItem('token', token);
+        console.log(token)
         navigate("/home")
       }
     } catch(error) {
       console.log(authResult['code'])
       console.error("Error while requesting google code: ", error)
+    } finally {
+      setLoading(false); 
     }
   }
 
