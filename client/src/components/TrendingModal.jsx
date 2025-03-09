@@ -21,7 +21,7 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                         <p className='font-medium text-sm mt-1'>{selectedCrypto.item.name}({selectedCrypto.item.symbol})</p>
                     </div>
                 </div>
-                <assets.IoMdClose className='text-white cursor-pointer text-xl smoothTransition hover:text-zinc-400' onClick={closeModal} />
+                <assets.IoMdClose className='text-white text-xl smoothTransition hover:text-zinc-400 cursor-pointer ' onClick={() => closeModal('info')} />
             </div>
             <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-3" />
             <div className='w-full rounded-lg bg-darkGray p-3'>

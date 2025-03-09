@@ -36,7 +36,6 @@ const CryptoCard = ({ crypto }) => {
     };
 
     const closeModal = (type) => {
-        // setSelectedCrypto(null);
         type==="info"? setSelectedCrypto(null) : setInvestCrypto(null);
     };
 
@@ -66,16 +65,16 @@ const CryptoCard = ({ crypto }) => {
     };
 
     useEffect(() => {
-        const fetchSavedCoins = async () => {
-            try {
-                const response = await getUserCoins();
-                const savedCoins = response.data;
-                const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
-                setIsSaved(isCryptoSaved);
-            } catch (error) {
-                console.error('Error fetching saved coins:', error);
-            }
-        };
+      const fetchSavedCoins = async () => {
+          try {
+              const response = await getUserCoins();
+              const savedCoins = response.data;
+              const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
+              setIsSaved(isCryptoSaved);
+          } catch (error) {
+              console.error('Error fetching saved coins:', error);
+          }
+      };
 
         fetchSavedCoins();
     }, [crypto.id]);
@@ -111,8 +110,8 @@ const CryptoCard = ({ crypto }) => {
             </div>
 
             <div className='flex justify-between items-center gap-8'>
-            <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'info')}>More info</button>
-            <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'invest')}>Invest</button>
+              <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'info')}>More info</button>
+              <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'invest')}>Invest</button>
             </div>
 
             <Toast
@@ -122,7 +121,7 @@ const CryptoCard = ({ crypto }) => {
                 onClose={handleCloseToast}
             />
             {selectedCrypto && <Modal selectedCrypto={selectedCrypto} closeModal={closeModal} />}
-            {investCrypto && <InvestModal investCrypto={investCrypto} closeModal={closeModal} />}
+            {investCrypto && <InvestModal selectedCrypto={investCrypto} closeModal={closeModal} />}
         </div>
     );
 };

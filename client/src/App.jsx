@@ -12,6 +12,7 @@ import FinBot from './pages/FinBot'
 import Trending from './pages/Trending'
 import Saved from './pages/Saved'
 import RefresHandler from './components/RefreshHandler'
+import Wallet from './pages/Wallet'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -50,7 +51,6 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Home />} />
-            {/* <Home /> */}
           </motion.div>
         } />
         <Route path='/market' element={
@@ -61,7 +61,6 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Market />} />
-            {/* <Market /> */}
           </motion.div>
         } />
         <Route path='/login' element={
@@ -112,7 +111,6 @@ const App = () => {
             transition={{ duration: 0.3 }}
           >
             <PrivateRoute element={<Trending />} />
-            {/* <Trending /> */}
           </motion.div>
         } />
         <Route path='/saved' element={
@@ -122,8 +120,17 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            {/* <PrivateRoute element={<Saved />} /> */}
-            <Saved />
+            <PrivateRoute element={<Saved />} />
+          </motion.div>
+        } />
+        <Route path='/wallet' element={
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 0.3 }}
+          >
+            <PrivateRoute element={<Wallet />} />
           </motion.div>
         } />
         <Route path='*' element={

@@ -21,14 +21,6 @@ const Market = () => {
         }
     };
 
-    const openModal = (crypto) => {
-        setSelectedCrypto(crypto);
-    };
-
-    const closeModal = () => {
-        setSelectedCrypto(null);
-    };
-
     useEffect(() => {
         const fetchCryptos = async () => {
             try {

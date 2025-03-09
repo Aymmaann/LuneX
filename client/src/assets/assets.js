@@ -27,6 +27,7 @@ import { FaMoon } from "react-icons/fa6";
 import { FaSun } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { LuCheck } from "react-icons/lu";
+import { IoWallet } from "react-icons/io5";
 
 const assets = {
     // Images
@@ -57,7 +58,8 @@ const assets = {
     FaMoon,
     FaSun,
     MdClose,
-    LuCheck
+    LuCheck,
+    IoWallet
 }
 
 export default assets;
