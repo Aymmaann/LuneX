@@ -10,10 +10,15 @@ const datastore = new Datastore({
   keyFilename: process.env.GCP_KEY_FILE 
 });
 
-// Create a separate datastore instance for user data
 const userDatastore = new Datastore({
   projectId: process.env.GCP_PROJECT_ID,
   databaseId: process.env.GCP_DATABASE_ID_LOGIN_INFO,
+  keyFilename: process.env.GCP_KEY_FILE
+});
+
+const investedDatastore = new Datastore({
+  projectId: process.env.GCP_PROJECT_ID,
+  databaseId: process.env.GCP_DATABASE_ID_INVESTED_CRYPTOS,
   keyFilename: process.env.GCP_KEY_FILE
 });
 
@@ -70,9 +75,7 @@ async function updateCryptoValuesForUser(userEmail) {
                   console.error(`Failed to get coin details for ${coinId}`);
                   continue;
               }
-
               const currentPrice = coinDetails.market_data.current_price?.usd || 0;
-
               const key = datastore.key(['UserCoin', `${userEmail}_${coinId}`]);
               const entity = {
                   key: key,
@@ -229,7 +232,6 @@ export const triggerCryptoUpdate = async (req, res) => {
   }
 };
 
-// Existing methods (keep these as they are)
 export const saveCoin = async (req, res) => {
     try {
       const token = req.headers.authorization?.split(' ')[1];
@@ -237,7 +239,6 @@ export const saveCoin = async (req, res) => {
       if (!token) {
         return res.status(401).json({ message: 'No token provided' });
       }
-  
       // Verify token
       let decoded;
       try {
@@ -252,9 +253,7 @@ export const saveCoin = async (req, res) => {
       if (!userEmail) {
         return res.status(400).json({ message: 'User email not found in token' });
       }
-
       const { coin } = req.body;
-  
       // Normalize coin data
       const normalizedCoin = {
         id: coin.item?.id || coin.id,
@@ -266,7 +265,6 @@ export const saveCoin = async (req, res) => {
         market_cap: coin.item?.data?.market_cap || coin.market_cap || 0,
         price_change_percentage: coin.item?.data?.price_change_percentage_24h?.usd || coin.price_change_percentage_24h || 0,
         volatility_score: null,
-        market_cap: coin.item?.data?.market_cap || coin.market_cap || 0,
         prediction: null,
         risk_score: null,
         savedAt: new Date()
@@ -338,10 +336,74 @@ export const getUserCoins = async (req, res) => {
   }
 };
 
+export const saveInvestedCrypto = async(req,res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1]
+    if(!token) {
+      return res.status(401).json({ message: 'No token provided' })
+    }
+    let decoded
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET)
+    } catch(tokenError) {
+      console.error('Token verification error:', tokenError);
+      return res.status(401).json({ message: 'Invalid or expired token' });
+    }
+
+    const userEmail = decoded.email;
+    if (!userEmail) {
+        return res.status(400).json({ message: 'User email not found in token' });
+    }
+
+    const { coin, quantity } = req.body;
+
+    const normalizedCoin = {
+      id: coin.item?.id || coin.id,
+      userEmail: userEmail,
+      name: coin.item?.name || coin.name,
+      symbol: coin.item?.symbol || coin.symbol,
+      image: coin.item?.large || coin.image || '',
+      current_price: coin.item?.data?.price || coin.current_price || 0,
+      market_cap: coin.item?.data?.market_cap || coin.market_cap || 0,
+      price_change_percentage: coin.item?.data?.price_change_percentage_24h?.usd || coin.price_change_percentage_24h || 0,
+      volatility_score: null,
+      prediction: null,
+      risk_score: null,
+      savedAt: new Date(),
+      quantity: quantity
+    };
+
+    const { volatility, risk, trend } = await getCryptoAnalysis(normalizedCoin.id);
+    normalizedCoin.volatility_score = volatility;
+    normalizedCoin.prediction = trend;
+    normalizedCoin.risk_score = risk;
+
+    const key = investedDatastore.key(['invested_cryptos', `${userEmail}_${normalizedCoin.id}`]);
+
+    await investedDatastore.save({
+        key: key,
+        data: normalizedCoin,
+    });
+
+    res.status(200).json({
+        message: 'Crypto investment saved successfully',
+        coin: normalizedCoin,
+    });
+  } catch (error) {
+    console.error('Detailed error saving invested crypto:', error);
+    res.status(500).json({
+        message: 'Failed to save invested crypto',
+        error: error.toString(),
+        stack: error.stack,
+    });
+  }
+}
+
 export default {
   saveCoin,
   getUserCoins,
   updateCryptoValues,
   triggerCryptoUpdate,
-  updateAllUsersCoins
+  updateAllUsersCoins,
+  saveInvestedCrypto
 };
