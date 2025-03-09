@@ -1,7 +1,8 @@
+import "dotenv/config";
 import { Datastore } from '@google-cloud/datastore';
 import jwt from 'jsonwebtoken';
-import "dotenv/config";
 import { getCryptoAnalysis, getCoinDetails } from '../services/cryptoServices.js';
+import { OAuth2Client } from 'google-auth-library';
 
 const datastore = new Datastore({
   projectId: process.env.GCP_PROJECT_ID, 
@@ -9,28 +10,54 @@ const datastore = new Datastore({
   keyFilename: process.env.GCP_KEY_FILE 
 });
 
-export const updateCryptoValues = async (req, res) => {
+// Create a separate datastore instance for user data
+const userDatastore = new Datastore({
+  projectId: process.env.GCP_PROJECT_ID,
+  databaseId: process.env.GCP_DATABASE_ID_LOGIN_INFO,
+  keyFilename: process.env.GCP_KEY_FILE
+});
+
+const client = new OAuth2Client();
+
+async function verifyOidcToken(authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new Error('Authorization header missing or invalid');
+  }
+  const token = authHeader.split('Bearer ')[1];
   try {
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) {
-          return res.status(401).json({ message: 'No token provided' });
-      }
+      console.log("Token to verify", token);
+      const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: process.env.API_URL,
+      });
+      const payload = ticket.getPayload();
+      console.log("Payload: ", payload);
+      console.log('OIDC Token Audience:', payload.aud);
+      console.log('Expected Audience:', process.env.API_URL);
+      return payload;
+  } catch (error) {
+      console.error('OIDC Token Verification Error:', error);
+      throw error;
+  }
+}
 
-      let decoded;
-      try {
-          decoded = jwt.verify(token, process.env.JWT_SECRET);
-      } catch (tokenError) {
-          console.error('Token verification error:', tokenError);
-          return res.status(401).json({ message: 'Invalid or expired token' });
-      }
-
-      const userEmail = decoded.email;
-      if (!userEmail) {
-          return res.status(400).json({ message: "User email not found in token" });
-      }
-
+// Helper function to update crypto values for a specific user
+async function updateCryptoValuesForUser(userEmail) {
+  try {
+      console.log(`Processing updates for user: ${userEmail}`);
+      
       const query = datastore.createQuery('UserCoin').filter('userEmail', '=', userEmail);
       const [coins] = await datastore.runQuery(query);
+      console.log(`Found ${coins.length} coins for user ${userEmail}`);
+
+      if (coins.length === 0) {
+          console.log(`No coins found for user ${userEmail}`);
+          return {
+              userEmail,
+              status: 'no_coins',
+              message: 'No coins found for this user'
+          };
+      }
 
       for (const coin of coins) {
           const { id: coinId } = coin;
@@ -54,18 +81,139 @@ export const updateCryptoValues = async (req, res) => {
                       current_price: currentPrice,
                       volatility_score: volatility,
                       prediction: trend,
-                      risk_score: risk
+                      risk_score: risk,
+                      last_updated: new Date()
                   }
               };
-              await datastore.save(entity);
-              console.log(`Updated values for ${coinId} for user ${userEmail}`);
+              try {
+                await datastore.save(entity);
+                console.log(`Updated values for ${coinId} for user ${userEmail}`);
+              } catch (saveError) {
+                console.error(`Error saving to Datastore for ${coinId} for user ${userEmail}:`, saveError);
+              }
 
           } catch (analysisError) {
               console.error(`Error updating ${coinId} for user ${userEmail}:`, analysisError);
           }
       }
 
-      res.status(200).json({ message: `Crypto values updated successfully for ${userEmail}` });
+      return {
+          userEmail,
+          status: 'success',
+          coinsUpdated: coins.length
+      };
+  } catch (error) {
+      console.error(`Error in updateCryptoValuesForUser for ${userEmail}:`, error);
+      return {
+          userEmail,
+          status: 'error',
+          message: error.message
+      };
+  }
+}
+
+// Main handler for scheduler - updates all users
+export const updateAllUsersCoins = async (req, res) => {
+  try {
+      // First verify if this is an authorized request from Cloud Scheduler
+      const authHeader = req.headers.authorization;
+      try {
+          const payload = await verifyOidcToken(authHeader);
+          // Check if the email is from a service account (Cloud Scheduler)
+          if (!payload.email.endsWith('.iam.gserviceaccount.com')) {
+              return res.status(403).json({ 
+                  message: 'Only service accounts can call this endpoint'
+              });
+          }
+          console.log("Scheduler authenticated successfully:", payload.email);
+      } catch (authError) {
+          console.error("Scheduler authentication failed:", authError);
+          return res.status(401).json({ 
+              message: 'Unauthorized access to scheduler endpoint'
+          });
+      }
+
+      // Get all unique users who have saved coins
+      console.log("Fetching all users with saved coins...");
+      const query = datastore.createQuery('UserCoin')
+          .select('userEmail');
+      
+      const [results] = await datastore.runQuery(query);
+      
+      // Extract unique user emails
+      const userEmails = [...new Set(results.map(coin => coin.userEmail))];
+      console.log(`Found ${userEmails.length} users with saved coins`);
+
+      if (userEmails.length === 0) {
+          return res.status(200).json({
+              message: 'No users with saved coins found',
+              usersProcessed: 0
+          });
+      }
+
+      // Process each user - but use sequential processing to avoid rate limits
+      const updateResults = [];
+      for (const email of userEmails) {
+          const result = await updateCryptoValuesForUser(email);
+          updateResults.push(result);
+          
+          // Add a small delay between users to avoid hitting API rate limits
+          await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      // Return results
+      return res.status(200).json({
+          message: 'Crypto update completed for all users',
+          usersProcessed: userEmails.length,
+          results: updateResults
+      });
+  } catch (error) {
+      console.error('Error in updateAllUsersCoins:', error);
+      return res.status(500).json({
+          message: 'Failed to update crypto values for all users',
+          error: error.message
+      });
+  }
+};
+
+export const updateCryptoValues = async (req, res) => {
+  try {
+      const authHeader = req.headers.authorization;
+      let userEmail;
+      try {
+          const payload = await verifyOidcToken(authHeader);
+          userEmail = payload.email;
+          console.log("User Email from OIDC: ", userEmail);
+      } catch (oidcError) {
+          try {
+              const token = authHeader?.split(' ')[1];
+              if (!token) {
+                  return res.status(401).json({ message: 'No token provided' });
+              }
+              let decoded;
+              decoded = jwt.verify(token, process.env.JWT_SECRET);
+              userEmail = decoded.email;
+          } catch (jwtError) {
+              return res.status(401).json({ message: 'Invalid or expired token' });
+          }
+      }
+
+      if (!userEmail) {
+          return res.status(400).json({ message: "User email not found in token" });
+      }
+
+      const result = await updateCryptoValuesForUser(userEmail);
+      
+      if (result.status === 'success') {
+          res.status(200).json({ 
+              message: `Crypto values updated successfully for ${userEmail}`,
+              coinsUpdated: result.coinsUpdated
+          });
+      } else {
+          res.status(result.status === 'no_coins' ? 200 : 500).json({ 
+              message: result.message || `Error updating crypto values for ${userEmail}`
+          });
+      }
   } catch (error) {
       console.error('Error updating crypto values:', error);
       res.status(500).json({ message: 'Failed to update crypto values', error: error.message });
@@ -81,13 +229,11 @@ export const triggerCryptoUpdate = async (req, res) => {
   }
 };
 
+// Existing methods (keep these as they are)
 export const saveCoin = async (req, res) => {
     try {
       const token = req.headers.authorization?.split(' ')[1];
       
-      // console.log('Received token:', token);
-      // console.log('Request body:', req.body); 
-  
       if (!token) {
         return res.status(401).json({ message: 'No token provided' });
       }
@@ -196,5 +342,6 @@ export default {
   saveCoin,
   getUserCoins,
   updateCryptoValues,
-  triggerCryptoUpdate
+  triggerCryptoUpdate,
+  updateAllUsersCoins
 };
