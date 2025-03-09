@@ -3,9 +3,13 @@ import assets from '../assets/assets';
 import axios from 'axios';
 import Toast from '../components/Toast';
 import { getUserCoins } from '../services/api';
+import Modal from './Modal';
+import InvestModal from './InvestModal';
 
 const CryptoCard = ({ crypto }) => {
     const [isSaved, setIsSaved] = useState(false);
+    const [selectedCrypto, setSelectedCrypto] = useState(null);
+    const [investCrypto, setInvestCrypto] = useState(null)
     const [showToastMsg, setShowToastMsg] = useState({
         isShown: false,
         message: "",
@@ -25,6 +29,15 @@ const CryptoCard = ({ crypto }) => {
             message,
             type,
         });
+    };
+
+    const openModal = (crypto,type) => {
+      type==="info"? setSelectedCrypto(crypto) : setInvestCrypto(crypto);
+    };
+
+    const closeModal = (type) => {
+        // setSelectedCrypto(null);
+        type==="info"? setSelectedCrypto(null) : setInvestCrypto(null);
     };
 
     const handleSave = async () => {
@@ -94,7 +107,12 @@ const CryptoCard = ({ crypto }) => {
             </div>
             <div className='flex items-center justify-between mt-4 text-zinc-500'>
                 <p className='text-sm font-light'>24H High: <span className='font-medium text-zinc-200'>${crypto.high_24h}</span></p>
-                <p className='text-sm font-light'>24H Low: <span className='font-medium text-zingc-200'>${crypto.low_24h}</span></p>
+                <p className='text-sm font-light'>24H Low: <span className='font-medium text-zinc-200'>${crypto.low_24h}</span></p>
+            </div>
+
+            <div className='flex justify-between items-center gap-8'>
+            <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'info')}>More info</button>
+            <button className='mt-6 py-2 px-3 flex-1 bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' onClick={() => openModal(crypto,'invest')}>Invest</button>
             </div>
 
             <Toast
@@ -103,6 +121,8 @@ const CryptoCard = ({ crypto }) => {
                 type={showToastMsg.type}
                 onClose={handleCloseToast}
             />
+            {selectedCrypto && <Modal selectedCrypto={selectedCrypto} closeModal={closeModal} />}
+            {investCrypto && <InvestModal investCrypto={investCrypto} closeModal={closeModal} />}
         </div>
     );
 };
