@@ -41,9 +41,6 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 
 ### Upcoming Cloud Services
 
-- **Firestore (Google Cloud):**  
-  - Storing user-tracked cryptocurrencies for seamless cross-device access.
-
 - **BigQuery (Google Cloud):**  
   - Analyzing historical crypto data and volatility patterns.  
   - Identifying correlations between trading volume and price changes.  
