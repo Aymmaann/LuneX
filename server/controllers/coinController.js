@@ -336,68 +336,140 @@ export const getUserCoins = async (req, res) => {
   }
 };
 
-export const saveInvestedCrypto = async(req,res) => {
+export const getInvestedCryptos = async(req,res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1]
+    const token = req.headers.authorization.split(' ')[1]
     if(!token) {
-      return res.status(401).json({ message: 'No token provided' })
+      return res.status(401).json({ message: 'No token porovided' })
     }
-    let decoded
+    let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET)
     } catch(tokenError) {
-      console.error('Token verification error:', tokenError);
-      return res.status(401).json({ message: 'Invalid or expired token' });
+      console.error('Token verification error: ', tokenError)
+      return res.status(401).json({ message: 'Invalid or expired token' })
     }
-
-    const userEmail = decoded.email;
-    if (!userEmail) {
-        return res.status(400).json({ message: 'User email not found in token' });
+    const userEmail = decoded.email
+    if(!userEmail) {
+      return res.status(400).json({ message: 'User email not found in token' })
     }
-
-    const { coin, quantity } = req.body;
-
-    const normalizedCoin = {
-      id: coin.item?.id || coin.id,
-      userEmail: userEmail,
-      name: coin.item?.name || coin.name,
-      symbol: coin.item?.symbol || coin.symbol,
-      image: coin.item?.large || coin.image || '',
-      current_price: coin.item?.data?.price || coin.current_price || 0,
-      market_cap: coin.item?.data?.market_cap || coin.market_cap || 0,
-      price_change_percentage: coin.item?.data?.price_change_percentage_24h?.usd || coin.price_change_percentage_24h || 0,
-      volatility_score: null,
-      prediction: null,
-      risk_score: null,
-      savedAt: new Date(),
-      quantity: quantity
-    };
-
-    const { volatility, risk, trend } = await getCryptoAnalysis(normalizedCoin.id);
-    normalizedCoin.volatility_score = volatility;
-    normalizedCoin.prediction = trend;
-    normalizedCoin.risk_score = risk;
-
-    const key = investedDatastore.key(['invested_cryptos', `${userEmail}_${normalizedCoin.id}`]);
-
-    await investedDatastore.save({
-        key: key,
-        data: normalizedCoin,
-    });
-
-    res.status(200).json({
-        message: 'Crypto investment saved successfully',
-        coin: normalizedCoin,
-    });
-  } catch (error) {
-    console.error('Detailed error saving invested crypto:', error);
+    const query = investedDatastore
+      .createQuery('invested_cryptos')
+      .filter('userEmail', '=', userEmail)
+    
+    const [coins] = await investedDatastore.runQuery(query)
+    res.status(200).json(coins)
+  } catch(error) {
+    console.error("Error retrieving coins: ", err)
     res.status(500).json({
-        message: 'Failed to save invested crypto',
-        error: error.toString(),
-        stack: error.stack,
-    });
+      message: 'Failed to retrieve coins',
+      error: error.message
+    })
   }
 }
+
+export const saveInvestedCrypto = async (req, res) => {
+  try {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ message: 'No token provided' });
+      }
+      let decoded;
+      try {
+          decoded = jwt.verify(token, process.env.JWT_SECRET);
+      } catch (tokenError) {
+          console.error('Token verification error:', tokenError);
+          return res.status(401).json({ message: 'Invalid or expired token' });
+      }
+
+      const userEmail = decoded.email;
+      if (!userEmail) {
+          return res.status(400).json({ message: 'User email not found in token' });
+      }
+
+      const { coin, quantity } = req.body;
+
+      const currentPrice = coin.item?.data?.price || coin.current_price || 0;
+
+      const coinId = coin.item?.id || coin.id;
+
+      const key = investedDatastore.key(['invested_cryptos', `${userEmail}_${coinId}`]);
+
+      const [existingCoin] = await investedDatastore.get(key);
+
+      let marketCap = coin.item?.data?.market_cap || coin.market_cap || 0;
+
+      // Check and remove the dollar sign from market_cap
+      if (typeof marketCap === 'string' && marketCap.startsWith('$')) {
+          marketCap = marketCap.substring(1).replace(/,/g, ''); // Remove $ and commas
+          marketCap = parseFloat(marketCap); // Convert to number if possible
+      }
+
+      if (existingCoin) {
+          const updatedQuantity = existingCoin.quantity + quantity;
+          const { volatility, risk, trend } = await getCryptoAnalysis(coinId);
+
+          const updatedCoin = {
+              ...existingCoin,
+              quantity: updatedQuantity,
+              volatility_score: volatility,
+              prediction: trend,
+              risk_score: risk,
+              current_price: currentPrice,
+              market_cap: marketCap, // Use the cleaned market cap
+          };
+
+          await investedDatastore.save({
+              key: key,
+              data: updatedCoin,
+          });
+
+          res.status(200).json({
+              message: 'Crypto investment updated successfully',
+              coin: updatedCoin,
+          });
+      } else {
+          const normalizedCoin = {
+              id: coinId,
+              userEmail: userEmail,
+              name: coin.item?.name || coin.name,
+              symbol: coin.item?.symbol || coin.symbol,
+              image: coin.item?.large || coin.image || '',
+              invested_price: currentPrice,
+              current_price: currentPrice,
+              market_cap: marketCap, 
+              price_change_percentage: coin.item?.data?.price_change_percentage_24h?.usd || coin.price_change_percentage_24h || 0,
+              volatility_score: null,
+              prediction: null,
+              risk_score: null,
+              savedAt: new Date(),
+              quantity: quantity
+          };
+
+          const { volatility, risk, trend } = await getCryptoAnalysis(normalizedCoin.id);
+          normalizedCoin.volatility_score = volatility;
+          normalizedCoin.prediction = trend;
+          normalizedCoin.risk_score = risk;
+
+          await investedDatastore.save({
+              key: key,
+              data: normalizedCoin,
+          });
+
+          res.status(200).json({
+              message: 'Crypto investment saved successfully',
+              coin: normalizedCoin,
+          });
+      }
+  } catch (error) {
+      console.error('Detailed error saving invested crypto:', error);
+      res.status(500).json({
+          message: 'Failed to save invested crypto',
+          error: error.toString(),
+          stack: error.stack,
+      });
+  }
+};
 
 export default {
   saveCoin,
