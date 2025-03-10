@@ -24,3 +24,12 @@ export const getUserCoins = () => {
       },
     })
 }
+
+export const getInvestedCryptos = () => {
+    const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    return api.get('/api/get-invested-cryptos', {
+        headers: {
+            Authorization: `bearer ${userInfo.token}`,
+        }
+    })
+}

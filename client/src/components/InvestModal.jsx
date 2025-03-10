@@ -143,6 +143,12 @@ const InvestModal = ({ selectedCrypto, closeModal }) => {
             >
                 Invest
             </button>
+            <Toast
+                isShown={showToastMsg.isShown}
+                message={showToastMsg.message}
+                type={showToastMsg.type}
+                onClose={handleCloseToast}
+            />
         </div>
     </div>
   )
