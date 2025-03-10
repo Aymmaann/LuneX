@@ -3,6 +3,7 @@ import { Datastore } from '@google-cloud/datastore';
 import jwt from 'jsonwebtoken';
 import { getCryptoAnalysis, getCoinDetails } from '../services/cryptoServices.js';
 import { OAuth2Client } from 'google-auth-library';
+import { io } from '../index.js';
 
 const datastore = new Datastore({
   projectId: process.env.GCP_PROJECT_ID, 
@@ -208,10 +209,17 @@ export const updateCryptoValues = async (req, res) => {
       const result = await updateCryptoValuesForUser(userEmail);
       
       if (result.status === 'success') {
-          res.status(200).json({ 
-              message: `Crypto values updated successfully for ${userEmail}`,
-              coinsUpdated: result.coinsUpdated
-          });
+        // After successfully updating crypto values, emit the event
+        const query = datastore.createQuery('UserCoin').filter('userEmail', '=', userEmail);
+        const [coins] = await datastore.runQuery(query);
+        coins.forEach(coin => {
+            io.emit('savedCryptoUpdated', coin);
+        });
+
+        res.status(200).json({
+            message: `Crypto values updated successfully for ${userEmail}`,
+            coinsUpdated: result.coinsUpdated
+        });
       } else {
           res.status(result.status === 'no_coins' ? 200 : 500).json({ 
               message: result.message || `Error updating crypto values for ${userEmail}`
@@ -267,7 +275,8 @@ export const saveCoin = async (req, res) => {
         volatility_score: null,
         prediction: null,
         risk_score: null,
-        savedAt: new Date()
+        savedAt: new Date(),
+        last_updated: new Date()
       };
 
       const { volatility, risk, trend } = await getCryptoAnalysis(normalizedCoin.id);
@@ -283,6 +292,8 @@ export const saveCoin = async (req, res) => {
         key: key,
         data: normalizedCoin
       });
+
+      io.emit('savedCryptoUpdated', normalizedCoin);
   
       res.status(200).json({
         message: 'Coin saved successfully',
@@ -416,7 +427,7 @@ export const saveInvestedCrypto = async (req, res) => {
               prediction: trend,
               risk_score: risk,
               current_price: currentPrice,
-              market_cap: marketCap, // Use the cleaned market cap
+              market_cap: marketCap, 
           };
 
           await investedDatastore.save({
@@ -443,7 +454,8 @@ export const saveInvestedCrypto = async (req, res) => {
               prediction: null,
               risk_score: null,
               savedAt: new Date(),
-              quantity: quantity
+              quantity: quantity,
+              last_updated: new Date()
           };
 
           const { volatility, risk, trend } = await getCryptoAnalysis(normalizedCoin.id);
