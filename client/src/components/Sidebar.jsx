@@ -54,18 +54,18 @@ const Sidebar = () => {
                     <p className={`text-sm font-semibold ${location.pathname === '/trending'? 'text-violet' : 'text-white'}`}>Trending</p>
                 </Link>
 
-                <Link to='/saved' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/saved'? 'bg-[#131627]' : 'bg-transparent'}`}>
-                    <div className="p-2 rounded-md">
-                        <assets.LuFileDown className={`text-[18px] ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`} />
-                    </div>
-                    <p className={`text-sm font-semibold ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`}>Saved</p>
-                </Link>
-
                 <Link to='/wallet' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/wallet'? 'bg-[#131627]' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.IoWallet className={`text-[18px] ${location.pathname === '/wallet'? 'text-violet' : 'text-white'}`} />
                     </div>
                     <p className={`text-sm font-semibold ${location.pathname === '/wallet'? 'text-violet' : 'text-white'}`}>Wallet</p>
+                </Link>
+
+                <Link to='/saved' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/saved'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                    <div className="p-2 rounded-md">
+                        <assets.LuFileDown className={`text-[18px] ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`} />
+                    </div>
+                    <p className={`text-sm font-semibold ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`}>Saved</p>
                 </Link>
 
                 <Link to='/finbot' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/finbot'? 'bg-[#131627]' : 'bg-transparent'}`}>

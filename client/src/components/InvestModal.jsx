@@ -134,8 +134,10 @@ const InvestModal = ({ selectedCrypto, closeModal }) => {
                         <p className='font-medium text-xs'>{selectedCrypto.item?.name || selectedCrypto.name}({selectedCrypto.item?.symbol || selectedCrypto.symbol})</p>
                     </div>
                 </div>
-                <p className='text-sm'>Quantity: {quantity}</p>
-                <p>${price}</p>
+                <div>
+                    <p className='text-sm'>Quantity: {quantity}</p>
+                    <p>${price}</p>
+                </div>
             </div>
             <button className='mt-6 py-2 px-3 w-full bg-[#131627] text-zinc-300 rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-violet hover:text-zinc-900' 
                     disabled={quantity == 0 || quantity == ''} 

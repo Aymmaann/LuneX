@@ -29,15 +29,15 @@ const TrendingModal = ({ selectedCrypto, closeModal }) => {
                 <p className='text-3xl mt-1 font-medium'>${selectedCrypto.item.data.price.toFixed(10)}</p>
                 <div className='flex items-center justify-between'>
                     <div className="flex items-center gap-1 mt-2">
-                        <div className={`rounded-md ${selectedCrypto.item.data.price_change_percentage_24h.usd > 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
-                            {selectedCrypto.item.data.price_change_percentage_24h.usd > 0? (
+                        <div className={`rounded-md ${selectedCrypto.item.data.price_change_percentage_24h.usd >= 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
+                            {selectedCrypto.item.data.price_change_percentage_24h.usd >= 0? (
                             <assets.IoArrowUpCircle className='text-[#43e643]' />
                             ) : (
                             <assets.IoArrowDownCircle className='text-[#ec3e44]' />
                             )}
                         </div>
-                        <p className={`font-medium text-xs ${selectedCrypto.item.data.price_change_percentage_24h.usd > 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>
-                            {selectedCrypto.item.data.price_change_percentage_24h.usd > 0? 
+                        <p className={`font-medium text-xs ${selectedCrypto.item.data.price_change_percentage_24h.usd >= 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>
+                            {selectedCrypto.item.data.price_change_percentage_24h.usd >= 0? 
                                 selectedCrypto.item.data.price_change_percentage_24h.usd.toFixed(2) 
                                 : 
                                 selectedCrypto.item.data.price_change_percentage_24h.usd.toFixed(2) * -1
