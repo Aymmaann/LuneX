@@ -13,9 +13,26 @@ import {
     getInvestedCryptos,
     updateAllInvestedUsersCoins
   } from './controllers/coinController.js';
+import { Server } from 'socket.io';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Adjust origin as needed
+        methods: ["GET", "POST"]
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
+});
 
 let lastFetchTime = null;
 const CACHE_DURATION = 10 * 60 * 1000; 
@@ -120,8 +137,22 @@ app.get("/api/update-all-users", updateAllUsersCoins);
 
 app.get("/api/update-all-invested-users", updateAllInvestedUsersCoins);
 
-app.post("/api/invest-crypto", saveInvestedCrypto);
+import { saveInvestedCrypto as originalSaveInvestedCrypto } from './controllers/coinController.js';
+
+app.post("/api/invest-crypto", async (req, res) => {
+    try {
+        const result = await originalSaveInvestedCrypto(req, res); 
+        if(res.statusCode === 200){
+            io.emit('investedCryptoUpdated', result.coin); 
+        }
+        return result;
+    } catch (error) {
+        console.error("Error in invested crypto route:", error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message,
+        });
+    }
+});
 
 app.use('/auth', router);
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
