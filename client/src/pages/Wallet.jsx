@@ -21,7 +21,7 @@ const Wallet = () => {
     if (search === '') {
         return setUpdatedCryptos(cryptos);
     } else {
-        const filteredCryptos = cryptos.filter(crypto => crypto.name.toLowerCase().includes(search.toLowerCase()));
+        const filteredCryptos = invested.filter(crypto => crypto.name.toLowerCase().includes(search.toLowerCase()));
         setUpdatedCryptos(filteredCryptos);
     }
   };
@@ -39,12 +39,17 @@ const Wallet = () => {
     cryptoValues.forEach(crypto => {
         totalNetWorth += crypto.totalValue
     })
-    setNetWorth(Number(totalNetWorth))
-
     cryptoValues.forEach(crypto => {
         investment += crypto.investedValue
     })
+    setNetWorth(Number(totalNetWorth))
     setInvestments(Number(investment))
+    if (investment !== 0) {
+        const percent = (((totalNetWorth - investment) / investment) * 100).toFixed(2);
+        setPriceChangePercent(percent);
+    } else {
+        setPriceChangePercent(0); 
+    }
   }
 
   const fetchInvestedCryptos = async () => {
@@ -122,7 +127,7 @@ const Wallet = () => {
 
   useEffect(() => {
     calculateWallet()
-    setPriceChangePercent((((netWorth-investments) / investments)*100).toFixed(2))
+    console.log("Investments: ", investments, "Net Worth: ", netWorth)
   }, [invested])
 
   if(loading) return <Loading />
@@ -135,7 +140,7 @@ const Wallet = () => {
         <SearchNav setSearch={setSearch} handleSearch={handleSearch} />
 
         <div className='bg-darkBlue flex-1 rounded-xl p-5 m-4'>
-            <p className='text-2xl font-medium'>Wallet</p>
+            <p className='text-2xl'>Wallet</p>
             <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-1" />
             
             <div className='flex justify-between'>

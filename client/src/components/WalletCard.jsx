@@ -6,7 +6,6 @@ const WalletCard = ({ crypto }) => {
   const [priceChangePercent, setPriceChangePercent] = useState()
 
   useEffect(() => {
-    console.log(crypto)
     setPriceChangePercent((((crypto.current_price - crypto.invested_price) / crypto.invested_price)*100).toFixed(2))
   }, [crypto])
   

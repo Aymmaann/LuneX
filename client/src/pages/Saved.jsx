@@ -5,6 +5,7 @@ import NotFound from './NotFound';
 import Loading from '../components/Loading';
 import SearchNav from '../components/SearchNav';
 import SavedCard from '../components/SavedCard';
+import { io } from 'socket.io-client'; 
 
 const Saved = () => {
   const [saved, setSaved] = useState([]);
@@ -13,6 +14,7 @@ const Saved = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const fetchInterval = useRef(null)
+  const socket = useRef(null);
   
   const handleSearch = () => {
       if(search === '') {
@@ -56,11 +58,33 @@ const Saved = () => {
   }
 
   useEffect(() => {
+    socket.current = io(import.meta.env.VITE_API_URL); 
+    socket.current.on('savedCryptoUpdated', (updatedCrypto) => {
+        setSaved((prevSaved) => {
+            const existingIndex = prevSaved.findIndex((crypto) => crypto.id === updatedCrypto.id);
+            if (existingIndex !== -1) {
+                // Update existing crypto
+                const newSaved = [...prevSaved];
+                newSaved[existingIndex] = updatedCrypto;
+                return newSaved;
+            } else {
+                return [...prevSaved, updatedCrypto];
+            }
+        });
+    });
+    return () => {
+        if (socket.current) {
+            socket.current.disconnect(); 
+        }
+    };
+  }, []);
+
+  useEffect(() => {
     const cachedData = localStorage.getItem("saved-cryptos")
     if(cachedData) {
       const { data, timestamp } = JSON.parse(cachedData)
       const now = Date.now()
-      const cacheDuration = 5*60*1000
+      const cacheDuration = 60*1000
 
       if(now - timestamp < cacheDuration) {
         setSaved(data)

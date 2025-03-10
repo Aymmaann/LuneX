@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion' 
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import Home from './pages/Home'
@@ -16,6 +16,7 @@ import Wallet from './pages/Wallet'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const navigate = useNavigate()
 
   const GoogleAuthProvider = () => {
       return (
@@ -28,6 +29,16 @@ const App = () => {
   const PrivateRoute = ({ element }) => {
     return isAuthenticated? element : <Navigate to="/login" />
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(token) {
+      setIsAuthenticated(true) 
+    } else {
+      setIsAuthenticated(false)
+      navigate('/login')
+    }
+  }, [navigate])
 
   return (
     <div>
