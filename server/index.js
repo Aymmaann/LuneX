@@ -9,35 +9,44 @@ import {
     updateCryptoValues, 
     triggerCryptoUpdate,
     updateAllUsersCoins,
-    saveInvestedCrypto
+    saveInvestedCrypto,
+    getInvestedCryptos
   } from './controllers/coinController.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 let lastFetchTime = null;
-const CACHE_DURATION = 5 * 60 * 1000; 
+const CACHE_DURATION = 10 * 60 * 1000; 
 
 app.use(cors());
 app.use(express.json());
 
 
-// Fetch top 100 crypto data
+// Fetch top 250 crypto data
 let cachedAllCryptoData = null;
+const CRYPTOS_TO_FETCH = 250; 
 app.get("/api/cryptos", async (req, res) => {
     try {
         const currentTime = new Date().getTime();
         if (cachedAllCryptoData && lastFetchTime && (currentTime - lastFetchTime < CACHE_DURATION)) {
             return res.json(cachedAllCryptoData);
         }
-        
-        const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=${process.env.API_KEY}`);
+
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${CRYPTOS_TO_FETCH}&page=1&sparkline=false&x_cg_demo_api_key=${process.env.API_KEY}`);
+
+        if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
         const data = await response.json();
-        const top100Coins = data.sort((a, b) => a.market_cap_rank - b.market_cap_rank).slice(0, 100);
-        
-        cachedAllCryptoData = top100Coins;
+
+        const top250Coins = data.sort((a, b) => a.market_cap_rank - b.market_cap_rank).slice(0, CRYPTOS_TO_FETCH);
+
+        cachedAllCryptoData = top250Coins;
         lastFetchTime = currentTime;
-        res.json(top100Coins);
+        res.json(top250Coins);
+
     } catch (error) {
         console.error("Error fetching data:", error);
         if (cachedAllCryptoData) {
@@ -95,6 +104,8 @@ app.post("/api/save-coin", saveCoin);
 
 // Display the saved coins
 app.get("/api/get-user-coins", getUserCoins);
+
+app.get("/api/get-invested-cryptos", getInvestedCryptos)
 
 app.get("/", (req,res) => {
     res.send("Hello from auth server")
