@@ -89,7 +89,7 @@ const CryptoCard = ({ crypto }) => {
                         <p className='text-sm font-light'>{crypto.name} ({crypto.symbol})</p>
                     </div>
                 </div>
-                <assets.CiSaveDown1 className={`text-[20px] cursor-pointer ${isSaved ? 'text-green-500' : 'text-zinc-500'}`} onClick={handleSave} />
+                <assets.CiSaveDown1 className={`text-[24px] cursor-pointer ${isSaved ? 'text-green-500' : 'text-zinc-500'}`} onClick={handleSave} />
             </div>
 
             <p className='text-sm text-zinc-500 mt-6'>Price:</p>
