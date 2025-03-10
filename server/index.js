@@ -10,7 +10,8 @@ import {
     triggerCryptoUpdate,
     updateAllUsersCoins,
     saveInvestedCrypto,
-    getInvestedCryptos
+    getInvestedCryptos,
+    updateAllInvestedUsersCoins
   } from './controllers/coinController.js';
 
 const app = express();
@@ -116,6 +117,8 @@ app.post("/update-crypto-value", updateCryptoValues)
 app.get("/api/trigger-crypto-update", triggerCryptoUpdate)
 
 app.get("/api/update-all-users", updateAllUsersCoins);
+
+app.get("/api/update-all-invested-users", updateAllInvestedUsersCoins);
 
 app.post("/api/invest-crypto", saveInvestedCrypto);
 

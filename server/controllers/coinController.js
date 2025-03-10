@@ -401,8 +401,8 @@ export const saveInvestedCrypto = async (req, res) => {
 
       // Check and remove the dollar sign from market_cap
       if (typeof marketCap === 'string' && marketCap.startsWith('$')) {
-          marketCap = marketCap.substring(1).replace(/,/g, ''); // Remove $ and commas
-          marketCap = parseFloat(marketCap); // Convert to number if possible
+          marketCap = marketCap.substring(1).replace(/,/g, '');
+          marketCap = parseFloat(marketCap); 
       }
 
       if (existingCoin) {
@@ -467,6 +467,126 @@ export const saveInvestedCrypto = async (req, res) => {
           message: 'Failed to save invested crypto',
           error: error.toString(),
           stack: error.stack,
+      });
+  }
+};
+
+// Helper function to update invested crypto values for a specific user
+async function updateInvestedCryptoValuesForUser(userEmail) {
+  try {
+      console.log(`Processing invested crypto updates for user: ${userEmail}`);
+
+      const query = investedDatastore.createQuery('invested_cryptos').filter('userEmail', '=', userEmail);
+      const [coins] = await investedDatastore.runQuery(query);
+      console.log(`Found ${coins.length} invested cryptos for user ${userEmail}`);
+
+      if (coins.length === 0) {
+          console.log(`No invested cryptos found for user ${userEmail}`);
+          return {
+              userEmail,
+              status: 'no_coins',
+              message: 'No invested cryptos found for this user'
+          };
+      }
+
+      for (const coin of coins) {
+          const { id: coinId } = coin;
+
+          try {
+              const coinDetails = await getCoinDetails(coinId);
+
+              if (!coinDetails) {
+                  console.error(`Failed to get coin details for ${coinId}`);
+                  continue;
+              }
+              const currentPrice = coinDetails.market_data.current_price?.usd || 0;
+              const key = investedDatastore.key(['invested_cryptos', `${userEmail}_${coinId}`]);
+              const entity = {
+                  key: key,
+                  data: {
+                      ...coin,
+                      current_price: currentPrice,
+                      last_updated: new Date()
+                  }
+              };
+              try {
+                  await investedDatastore.save(entity);
+                  console.log(`Updated current price for ${coinId} for user ${userEmail} in invested cryptos`);
+              } catch (saveError) {
+                  console.error(`Error saving to invested Datastore for ${coinId} for user ${userEmail}:`, saveError);
+              }
+
+          } catch (analysisError) {
+              console.error(`Error updating ${coinId} for user ${userEmail} in invested cryptos:`, analysisError);
+          }
+      }
+
+      return {
+          userEmail,
+          status: 'success',
+          coinsUpdated: coins.length
+      };
+  } catch (error) {
+      console.error(`Error in updateInvestedCryptoValuesForUser for ${userEmail}:`, error);
+      return {
+          userEmail,
+          status: 'error',
+          message: error.message
+      };
+  }
+}
+
+// Main handler for scheduler - updates all invested users
+export const updateAllInvestedUsersCoins = async (req, res) => {
+  try {
+      // First verify if this is an authorized request from Cloud Scheduler
+      const authHeader = req.headers.authorization;
+      try {
+          const payload = await verifyOidcToken(authHeader);
+          if (!payload.email.endsWith('.iam.gserviceaccount.com')) {
+              return res.status(403).json({
+                  message: 'Only service accounts can call this endpoint'
+              });
+          }
+          console.log("Scheduler authenticated successfully:", payload.email);
+      } catch (authError) {
+          console.error("Scheduler authentication failed:", authError);
+          return res.status(401).json({
+              message: 'Unauthorized access to scheduler endpoint'
+          });
+      }
+
+      // Get all unique users who have invested coins
+      console.log("Fetching all users with invested coins...");
+      const query = investedDatastore.createQuery('invested_cryptos').select('userEmail');
+      const [results] = await investedDatastore.runQuery(query);
+      const userEmails = [...new Set(results.map(coin => coin.userEmail))];
+      console.log(`Found ${userEmails.length} users with invested coins`);
+
+      if (userEmails.length === 0) {
+          return res.status(200).json({
+              message: 'No users with invested coins found',
+              usersProcessed: 0
+          });
+      }
+
+      const updateResults = [];
+      for (const email of userEmails) {
+          const result = await updateInvestedCryptoValuesForUser(email);
+          updateResults.push(result);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      return res.status(200).json({
+          message: 'Invested crypto update completed for all users',
+          usersProcessed: userEmails.length,
+          results: updateResults
+      });
+  } catch (error) {
+      console.error('Error in updateAllInvestedUsersCoins:', error);
+      return res.status(500).json({
+          message: 'Failed to update invested crypto values for all users',
+          error: error.message
       });
   }
 };
