@@ -97,14 +97,14 @@ const TrendingCrypto = ({ crypto }) => {
         <p className='text-3xl font-medium mt-2'>${crypto.item.data.price.toFixed(5)}</p>
         
         <div className="flex items-center gap-1 mt-2">
-            <div className={`rounded-md ${crypto.item.data.price_change_percentage_24h.usd > 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
-                {crypto.item.data.price_change_percentage_24h.usd > 0? (
+            <div className={`rounded-md ${crypto.item.data.price_change_percentage_24h.usd >= 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
+                {crypto.item.data.price_change_percentage_24h.usd >= 0? (
                 <assets.IoArrowUpCircle className='text-[#43e643]' />
                 ) : (
                 <assets.IoArrowDownCircle className='text-[#ec3e44]' />
                 )}
             </div>
-            <p className={`font-medium text-xs ${crypto.item.data.price_change_percentage_24h.usd > 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.item.data.price_change_percentage_24h.usd > 0? crypto.item.data.price_change_percentage_24h.usd.toFixed(2) : crypto.item.data.price_change_percentage_24h.usd.toFixed(2) * -1}%</p>
+            <p className={`font-medium text-xs ${crypto.item.data.price_change_percentage_24h.usd >= 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.item.data.price_change_percentage_24h.usd >= 0? crypto.item.data.price_change_percentage_24h.usd.toFixed(2) : crypto.item.data.price_change_percentage_24h.usd.toFixed(2) * -1}%</p>
         </div>
         
         <p className='text-sm font-light mt-4 text-zinc-500'>Market Cap Rank: <span className='font-medium text-zinc-300'>{crypto.item.market_cap_rank}</span></p>

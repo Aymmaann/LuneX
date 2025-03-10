@@ -18,14 +18,14 @@ const SavedCard = ({ crypto }) => {
         <p className='text-sm text-zinc-500 mt-6'>Price:</p>
         <p className='text-3xl font-medium mt-1'>${crypto.current_price}</p>
         <div className="flex items-center gap-1 mt-2">
-            <div className={`rounded-md ${crypto.price_change_percentage > 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
-                {crypto.price_change_percentage > 0? (
+            <div className={`rounded-md ${crypto.price_change_percentage >= 0? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
+                {crypto.price_change_percentage >= 0? (
                 <assets.IoArrowUpCircle className='text-[#43e643]' />
                 ) : (
                 <assets.IoArrowDownCircle className='text-[#ec3e44]' />
                 )}
             </div>
-            <p className={`font-medium text-xs ${crypto.price_change_percentage > 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.price_change_percentage > 0? crypto.price_change_percentage.toFixed(2) : crypto.price_change_percentage.toFixed(2) * -1}%</p>
+            <p className={`font-medium text-xs ${crypto.price_change_percentage >= 0? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.price_change_percentage >= 0? crypto.price_change_percentage.toFixed(2) : crypto.price_change_percentage.toFixed(2) * -1}%</p>
         </div>
     </div>
   )
