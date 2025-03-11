@@ -147,7 +147,7 @@ const Wallet = () => {
                 <div>
                     <p className='font-medium text-zinc-600 text-sm mt-3'>Total Net Worth:</p>
                     <div className="flex gap-0.5 items-end mt-1">
-                        <p className='font-medium text-3xl'>${netWorth.toFixed(7)}</p>
+                        <p className='font-medium text-3xl'>${netWorth.toFixed(5)}</p>
                         <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
                     </div>
                     <div className="flex items-center gap-1 mt-2">
@@ -162,7 +162,7 @@ const Wallet = () => {
                     </div>
                     <p className='font-medium text-zinc-600 text-sm mt-6'>Total Investments:</p>
                     <div className="flex gap-0.5 items-end mt-1">
-                        <p className='font-medium text-3xl'>${investments.toFixed(7)}</p>
+                        <p className='font-medium text-3xl'>${investments.toFixed(5)}</p>
                         <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
                     </div>
                 </div>

@@ -28,8 +28,8 @@ const Sidebar = () => {
     <div className={`fixed overflow-y-auto w-64 min-h-screen p-4 flex flex-col justify-between`}>
         <div>
             <div className='flex gap-2 items-center w-[100px] pl-2'>
-            <img src={assets.noBgLogo} alt="" className='w-[25px]'/>
-            <p className='text-lg font-light'>Lune<span className='font-semibold'>X</span></p>
+                <img src={assets.noBgLogo} alt="" className='w-[25px]'/>
+                <p className='text-lg font-light'>Lune<span className='font-semibold'>X</span></p>
             </div>
             <hr className="my-3 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-3" />
             <div className='mt-4 h-full'>

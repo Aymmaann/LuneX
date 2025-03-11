@@ -11,6 +11,7 @@ const Market = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
+    const [freq, setFreq] = useState(0)
 
     const handleSearch = () => {
         if (search === '') {
@@ -36,7 +37,14 @@ const Market = () => {
             }
         };
         fetchCryptos();
-    }, []);
+    }, [freq]);
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setFreq(prevFreq => prevFreq+1)
+        }, 60000)
+        return () => clearTimeout(timerId);
+    }, [])
 
     if (loading) return <Loading />;
     if (error) return <NotFound />;
