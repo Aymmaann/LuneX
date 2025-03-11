@@ -3,7 +3,7 @@ import { Datastore } from '@google-cloud/datastore';
 import jwt from 'jsonwebtoken';
 import { getCryptoAnalysis, getCoinDetails } from '../services/cryptoServices.js';
 import { OAuth2Client } from 'google-auth-library';
-import { io } from '../index.js';
+import { io } from "../index.js";
 
 const datastore = new Datastore({
   projectId: process.env.GCP_PROJECT_ID, 
