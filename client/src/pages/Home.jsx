@@ -30,7 +30,7 @@ const Home = () => {
                 <assets.BiSolidAnalyse className='text-violet text-3xl'/>
                 <div className='leading-6'>
                   <p className='font-semibold mt-1'>Smart Risk Analysis</p>
-                  <p className='text-zinc-400'>Instantly assess crypto volatility based on last month's market trends</p>
+                  <p className='text-zinc-400'>Instantly assess crypto volatility based on market trends</p>
                 </div>
               </div>
               <div className='flex gap-2 w-[300px]'>
