@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 const io = new Server(server, {
     cors: {
-        origin: "*", // Adjust origin as needed
+        origin: "*", 
         methods: ["GET", "POST"]
     }
 });
@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
 });
 
 let lastFetchTime = null;
-const CACHE_DURATION = 10 * 60 * 1000; 
+const CACHE_DURATION = 5 * 60 * 1000; 
 
 app.use(cors());
 app.use(express.json());
@@ -156,3 +156,5 @@ app.post("/api/invest-crypto", async (req, res) => {
 });
 
 app.use('/auth', router);
+
+export { io };
