@@ -86,6 +86,47 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
    npm run dev
    ```
 
+## Environment Variables (Client)
+
+The client component of this project utilizes the following environment variables, which are specific to Vite projects. These variables should be set in a `.env` file within the `client` directory.
+
+**Explanation of Variables:**
+
+* `VITE_GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID for the client-side application.
+* `VITE_API_URL`: The URL of the API server that the client will communicate with.
+
+**Setting Up Environment Variables:**
+
+1.  Create a `.env` file in the `client` directory.
+2.  Populate the `.env` file with the required variables and their values, as shown above.
+3.  Ensure that the `.env` file is not committed to version control (add it to your `.gitignore` file).
+
+## Environment Variables (Server)
+
+The server component of this project relies on the following environment variables. These variables should be set in a `.env` file within the `server` directory.
+
+**Explanation of Variables:**
+
+* `API_KEY`: API key for external services (if applicable).
+* `PORT`: The port on which the server will listen.
+* `GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID.
+* `GOOGLE_CLIENT_SECRET`: Google OAuth 2.0 Client Secret.
+* `JWT_SECRET`: Secret key for JSON Web Token (JWT) generation.
+* `JWT_TIMEOUT`: Expiration time for JWTs.
+* `NODE_ENV`: Node.js environment (e.g., `development`, `production`).
+* `GCP_PROJECT_ID`: Google Cloud Platform project ID.
+* `GCP_DATABASE_ID_SAVED_CRYPTO`: Google Cloud Platform database ID for saved cryptocurrency data.
+* `GCP_DATABASE_ID_LOGIN_INFO`: Google Cloud Platform database ID for login information.
+* `GCP_DATABASE_ID_INVESTED_CRYPTOS`: Google Cloud Platform database ID for invested cryptocurrency data.
+* `GCP_KEY_FILE`: Path to the Google Cloud Platform service account key file.
+* `API_URL`: The url of your api.
+
+**Setting Up Environment Variables:**
+
+1.  Create a `.env` file in the `server` directory.
+2.  Populate the `.env` file with the required variables and their values.
+3.  Ensure that the `.env` file is not committed to version control (add it to your `.gitignore` file). 
+
 ## Contributing
 This project is still in development. Contributions and suggestions are welcome!
 

@@ -37,14 +37,14 @@ const Market = () => {
             }
         };
         fetchCryptos();
-    }, [freq]);
+    }, []);
 
-    useEffect(() => {
-        const timerId = setTimeout(() => {
-            setFreq(prevFreq => prevFreq+1)
-        }, 60000)
-        return () => clearTimeout(timerId);
-    }, [])
+    // useEffect(() => {
+    //     const timerId = setTimeout(() => {
+    //         setFreq(prevFreq => prevFreq+1)
+    //     }, 60000)
+    //     return () => clearTimeout(timerId);
+    // }, [])
 
     if (loading) return <Loading />;
     if (error) return <NotFound />;
