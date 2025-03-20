@@ -39,6 +39,30 @@ const CryptoCard = ({ crypto }) => {
         type==="info"? setSelectedCrypto(null) : setInvestCrypto(null);
     };
 
+    // const handleSave = async () => {
+    //     const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    //     if (!userInfo || !userInfo.token) {
+    //         showToastMessage('Please log in to save coins', 'error');
+    //         return;
+    //     }
+    //     try {
+    //         console.log('Crypto ID: ', crypto.id);
+    //         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/save-coin`,
+    //             { coin: crypto },
+    //             {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${userInfo.token}`
+    //                 }
+    //             }
+    //         );
+    //         setIsSaved(true);
+    //         showToastMessage('Coin saved successfully!', 'success');
+    //     } catch (error) {
+    //         console.error('Full error object:', error);
+    //         console.error('Error response:', error.response);
+    //         showToastMessage('Failed to save coin', 'error');
+    //     }
+    // };
     const handleSave = async () => {
         const userInfo = JSON.parse(localStorage.getItem('user-info'));
         if (!userInfo || !userInfo.token) {
@@ -102,7 +126,7 @@ const CryptoCard = ({ crypto }) => {
                         <assets.IoArrowDownCircle className='text-[#ec3e44]' />
                     )}
                 </div>
-                <p className={`font-medium text-xs ${crypto.price_change_percentage_24h >= 0 ? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.price_change_percentage_24h >= 0 ? crypto.price_change_percentage_24h.toFixed(2) : crypto.price_change_percentage_24h.toFixed(2) * -1}%</p>
+                <p className={`font-medium text-xs ${crypto.price_change_percentage_24h >= 0 ? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{crypto.price_change_percentage_24h >= 0 ? crypto.price_change_percentage_24h : crypto.price_change_percentage_24h * -1}%</p>
             </div>
             <div className='flex items-center justify-between mt-4 text-zinc-500'>
                 <p className='text-sm font-light'>24H High: <span className='font-medium text-zinc-200'>${crypto.high_24h}</span></p>
