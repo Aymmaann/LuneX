@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
 });
 
 let lastFetchTime = null;
-const CACHE_DURATION = 5 * 60 * 1000; 
+const CACHE_DURATION = 60 * 60 * 1000; 
 
 app.use(cors());
 app.use(express.json());
@@ -63,6 +63,9 @@ app.get("/api/cryptos", async (req, res) => {
 
         cachedAllCryptoData = top250Coins;
         lastFetchTime = currentTime;
+        setTimeout(() => {
+            cachedAllCryptoData = null;
+        }, CACHE_DURATION);
         res.json(top250Coins);
 
     } catch (error) {
@@ -89,6 +92,9 @@ app.get("/trending", async (req, res) => {
 
         cachedTrendingData = top100Coins;
         lastFetchTime = currentTime;
+        setTimeout(() => {
+            cachedTrendingData = null;
+        }, CACHE_DURATION);
         res.json(top100Coins);
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -100,16 +106,25 @@ app.get("/trending", async (req, res) => {
 });
 
 // Retrieve the coin's price data from the past 30 days
+const historicalDataCache = new Map();
 app.get("/api/crypto/:id/history", async (req, res) => {
     try {
         const { id } = req.params;
         const { days } = req.query;
+        const cacheKey = `history_${id}_${days}`; 
+        if (historicalDataCache.has(cacheKey)) {
+            return res.json(historicalDataCache.get(cacheKey)); 
+        }
         const response = await fetch(
             `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily&x_cg_demo_api_key=${process.env.API_KEY}`
         );
         if (!response.ok) throw new Error("Failed to fetch historical data");
 
         const data = await response.json();
+        historicalDataCache.set(cacheKey, data)
+        setTimeout(() => {
+            historicalDataCache.delete(cacheKey);
+        }, CACHE_DURATION);
         res.json(data);
     } catch (error) {
         console.error("Error fetching historical data:", error);

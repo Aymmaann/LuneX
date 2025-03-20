@@ -64,12 +64,27 @@ const TrendingCrypto = ({ crypto }) => {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchSavedCoins = async () => {
+  //       try {
+  //           const response = await getUserCoins();
+  //           const savedCoins = response.data;
+  //           const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
+  //           setIsSaved(isCryptoSaved);
+  //       } catch (error) {
+  //           console.error('Error fetching saved coins:', error);
+  //       }
+  //   };
+
+  //   fetchSavedCoins();
+  // }, [crypto.id]);
   useEffect(() => {
     const fetchSavedCoins = async () => {
         try {
             const response = await getUserCoins();
             const savedCoins = response.data;
-            const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.id);
+            // Use crypto.item.id here
+            const isCryptoSaved = savedCoins.some(coin => coin.id === crypto.item.id);
             setIsSaved(isCryptoSaved);
         } catch (error) {
             console.error('Error fetching saved coins:', error);
@@ -77,7 +92,7 @@ const TrendingCrypto = ({ crypto }) => {
     };
 
     fetchSavedCoins();
-  }, [crypto.id]);
+  }, [crypto.item.id]);
 
 
   return (
