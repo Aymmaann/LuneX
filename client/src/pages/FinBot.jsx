@@ -22,7 +22,7 @@ const FinBot = () => {
       alert('Please enter a message')
       return
     }
-    onSent(input) 
+    onSent() 
     setInput('')
   }
 
@@ -45,7 +45,7 @@ const FinBot = () => {
             <div>
               <div className='flex gap-5 justify-end'>
                 <img src={assets.bgPlain} alt="" className='w-[35px] h-[35px]'/>
-                <p className='bg-zinc-700 px-4 py-2 rounded-3xl rounded-tr-[5px] leading-8 tracking-wide max-h-[60vh] overflow-y-scroll'>{recentPrompt}</p>
+                <p className='bg-zinc-700 px-4 py-2 rounded-3xl rounded-tr-[5px] leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>{recentPrompt}</p>
               </div>
               <div className='flex gap-5 mt-5'>
                 <div className='w-[35px] h-[35px]'>
@@ -61,7 +61,7 @@ const FinBot = () => {
                 {loading? (
                   <p className='leading-8 tracking-wide'>Loading...</p>
                 ) : (
-                  <div className='leading-8 tracking-wide max-h-[60vh] overflow-y-scroll'>
+                  <div className='leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>
                     <ReactMarkdown>{response}</ReactMarkdown>
                   </div>
                 )}
