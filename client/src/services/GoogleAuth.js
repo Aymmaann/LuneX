@@ -78,13 +78,6 @@ const loadGoogleScript = () => {
   return script;
 };
 
-/**
- * Custom hook to handle Google Authentication
- * @param {string} clientId - Google OAuth client ID
- * @param {Function} onSuccess - Callback function on successful authentication
- * @param {Function} onError - Callback function on authentication error
- * @returns {Object} Object containing Google Auth methods
- */
 export const useGoogleAuth = (clientId, onSuccess, onError) => {
   // Handle Google Sign-In response
   const handleGoogleResponse = useCallback(async (response) => {

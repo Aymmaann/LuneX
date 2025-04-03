@@ -1,14 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import assets from "../assets/assets.js"
-import { ThemeContext } from '../context/ThemeProvider.jsx'
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate()
-  const { theme, setTheme } = useContext(ThemeContext)
-  const text = theme==='dark'? 'text-zinc-300' : 'text-zinc-800';
-  const background = theme==='dark'? 'bg-[#0b0c19]' : 'bg-[#ffffff]';
 
   const handleLogout = () => {
     localStorage.removeItem('user-info')
@@ -19,13 +15,8 @@ const Sidebar = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  useEffect(() => {
-    const text = theme==='dark'? 'text-zinc-300' : 'text-zinc-800';
-    const background = theme==='dark'? 'bg-[#0b0c19]' : 'bg-[#ffffff]';
-  }, [theme])
-
   return (
-    <div className={`fixed overflow-y-auto w-64 min-h-screen p-4 flex flex-col justify-between`}>
+    <div className={`fixed overflow-y-auto w-64 min-h-screen p-4 flex flex-col justify-between bg-darkBlue`}>
         <div>
             <div className='flex gap-2 items-center w-[100px] pl-2'>
                 <img src={assets.noBgLogo} alt="" className='w-[25px]'/>

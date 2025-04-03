@@ -28,6 +28,8 @@ import { FaSun } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { LuCheck } from "react-icons/lu";
 import { IoWallet } from "react-icons/io5";
+import { FaCloudArrowDown } from "react-icons/fa6";
+import { BiRightArrow } from "react-icons/bi";
 
 const assets = {
     // Images
@@ -59,7 +61,9 @@ const assets = {
     FaSun,
     MdClose,
     LuCheck,
-    IoWallet
+    IoWallet,
+    FaCloudArrowDown,
+    BiRightArrow
 }
 
 export default assets;
