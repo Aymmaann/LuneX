@@ -5,7 +5,7 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 ## Features
 
 - **User Authentication:** Implements OAuth authentication, allowing secure sign-in and user data storage in a Google Cloud Datastore.
-- **Dashboard:** Displays the top 100 cryptocurrencies with real-time pricing and market details.
+- **Dashboard:** Displays the top 250 cryptocurrencies with real-time pricing and market details.
 - **Detailed Crypto View:** Each cryptocurrency has a modal that provides:
   - Historical data for the last 30 days.
   - A built-in currency converter to check the equivalent value in USD.
