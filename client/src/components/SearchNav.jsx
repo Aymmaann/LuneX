@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
 import assets from '../assets/assets'
-import { ThemeContext } from '../context/ThemeProvider.jsx'
 
 const SearchNav = ({ setSearch, handleSearch }) => {
-  const { theme, setTheme } = useContext(ThemeContext)
 
   const userInfo = JSON.parse(localStorage.getItem("user-info"))
 
