@@ -11,7 +11,14 @@ const ContextProvider = ({children}) => {
     const [response, setResponse] = useState("")
 
     const onSent = async(prompt) => {
-        await getResponse(prompt)
+        setResponse("")
+        setLoading(true)
+        setShowResult(true)
+        setRecentPrompt(input)
+        const result = await getResponse(input)
+        setResponse(result)
+        setLoading(false)
+        setInput('')
     }
 
     const contextValue = {
