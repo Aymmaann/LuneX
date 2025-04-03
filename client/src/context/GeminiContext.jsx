@@ -105,15 +105,15 @@ const ContextProvider = ({ children }) => {
             Your primary goal is to provide accurate and helpful responses to the user's questions regarding their cryptocurrencies.
 
             Flexibility: Be flexible in how you use the provided data. The user might ask about current prices, investment performance, volatility, or any other relevant information.
-            Data Priority: Prioritize the data I've given you for answering the user's questions. Do not refer to external sources for the cryptocurrencies I provided unless explicitly asked to.
+            Data Priority: Prioritize the data I've given you for answering the user's questions. Do not refer to external sources for the cryptocurrencies I provided unless explicitly asked about things the given data does not provide.
             Enhancements: Feel free to enhance the user experience by providing additional relevant information or insights, if applicable. For example, you could offer comparisons, potential trends, or summaries of the data.
             User Focus: Always keep the user's needs in mind and strive to provide clear, concise, and informative responses.
-            Adaptability: Be prepared to adapt to different question styles and formats.
-            Use the provided data to answer the user's question below. Do not mention that you are using the provided data, just answer the question as if you have access to the information.
+            Adaptability: Be prepared to adapt to different question styles and formats and be flexible and do not give fixed responses try to make yourself seem like a helper companion for the user in guiding or advising them.
+            Use the provided data to answer the user's question below. Do not mention that you are using the provided data, just answer the question as if you have access to the information or else if the user asks about something 
+            else you're free to answer how you deem worthy either by referring external sources or from your own knowledge.
 
             User's Question: ${input}
         `;
-        // Important: Use the cryptocurrency information above to answer the user's questions. Do not refer to external sources for these cryptocurrencies, only use the data provided above.
 
         console.log("Saved cryptos: ", JSON.stringify(savedCryptos));
         const result = await getResponse(context);
