@@ -15,7 +15,14 @@ const ContextProvider = ({children}) => {
     }
 
     const contextValue = {
-
+        input,
+        setInput,
+        onSent,
+        recentPrompt,
+        setRecentPrompt,
+        showResult,
+        loading,
+        response
     }
     return (
         <GeminiContext.Provider value={contextValue}>
