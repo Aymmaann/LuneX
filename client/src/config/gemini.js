@@ -8,6 +8,7 @@ async function getResponse(prompt) {
     contents: prompt,
   });
   console.log(response.text);
+  return response.text
 }
 
 export default getResponse;

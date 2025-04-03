@@ -42,8 +42,6 @@
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
 }
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -100,13 +98,20 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes rotateRobot {
+  0%, 100% {
+      transform: rotate(25deg);
+  }
+  50% {
+      transform: rotate(-25deg);
   }
 }
