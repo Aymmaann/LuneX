@@ -94,6 +94,7 @@ The client component of this project utilizes the following environment variable
 
 * `VITE_GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID for the client-side application.
 * `VITE_API_URL`: The URL of the API server that the client will communicate with.
+* `VITE_GEMINI_API_KEY`: Your application's key for accessing the Google Gemini API.
 
 **Setting Up Environment Variables:**
 
