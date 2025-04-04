@@ -88,6 +88,19 @@ const ContextProvider = ({ children }) => {
         }
     }, []);
 
+    const delayResponse = (text,delay) => {
+        setResponse(text[0])
+        let charIndex = 0
+        const intervalId = setInterval(() => {
+            if(charIndex < text.length) {
+                setResponse((prev) => prev + text[charIndex])
+                charIndex++
+            } else {
+                clearInterval(intervalId)
+            }
+        }, delay)
+    }
+
     const onSent = async () => {
         setResponse("");
         setLoading(true);
@@ -118,7 +131,7 @@ const ContextProvider = ({ children }) => {
         console.log("Saved cryptos: ", JSON.stringify(savedCryptos));
         const result = await getResponse(context);
 
-        setResponse(result);
+        delayResponse(result, 4);
         setLoading(false);
         setInput('');
     };

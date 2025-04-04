@@ -59,7 +59,7 @@ const FinBot = () => {
                   />
                 </div>
                 {loading? (
-                  <p className='leading-8 tracking-wide'>Loading...</p>
+                  <p className='leading-8 tracking-wide text-sm'>Loading...</p>
                 ) : (
                   <div className='leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>
                     <ReactMarkdown>{response}</ReactMarkdown>
