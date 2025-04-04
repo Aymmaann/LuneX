@@ -42,10 +42,10 @@ const FinBot = () => {
               <p className="bg-gradient-to-b from-zinc-300 to-zinc-600 bg-clip-text text-transparent text-[45px]">Hello, {userInfo?.name}.</p>
             </div>
           ) : (
-            <div>
+            <div className='max-h-[80vh]'>
               <div className='flex gap-5 justify-end'>
                 <img src={assets.bgPlain} alt="" className='w-[35px] h-[35px]'/>
-                <p className='bg-zinc-700 px-4 py-2 rounded-3xl rounded-tr-[5px] leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>{recentPrompt}</p>
+                <p className='bg-zinc-700 px-4 py-2 rounded-3xl rounded-tr-[5px] leading-8 tracking-wide max-h-[20vh] overflow-y-scroll text-sm'>{recentPrompt}</p>
               </div>
               <div className='flex gap-5 mt-5'>
                 <div className='w-[35px] h-[35px]'>
@@ -61,7 +61,7 @@ const FinBot = () => {
                 {loading? (
                   <p className='leading-8 tracking-wide text-sm'>Loading...</p>
                 ) : (
-                  <div className='leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>
+                  <div className='leading-8 tracking-wide max-h-[51vh] overflow-y-scroll text-sm'>
                     <ReactMarkdown>{response}</ReactMarkdown>
                   </div>
                 )}
@@ -70,7 +70,7 @@ const FinBot = () => {
           )}
 
 
-          <div className='flex items-center justify-between border border-zinc-800 rounded-lg gap-3'>
+          <div className='flex items-center justify-between border border-zinc-800 rounded-lg gap-3 mt-6'>
             <input type="text" 
                    placeholder='Ask FinBot' 
                    className='bg-transparent outline-none text-sm py-4 px-4 flex-1 placeholder:text-zinc-400 h-full'
