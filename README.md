@@ -12,10 +12,11 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 - **Trending Page:** Highlights trending cryptocurrencies with:
   - A modal showing the price trend for the last 24 hours.
   - Dynamic investment advice based on current growth or fall rate (e.g., "Promising," "Be Cautious," "Risky to Invest").
-- **Upcoming Features:**
-  - **AI-Powered Volatility Alerts:** BigQuery analytics and vector AI to detect significant price changes in user-tracked cryptos.
-  - **Multi-Cloud Integration:** Store user-selected cryptos in Firestore, analyze in BigQuery, and use AWS services for email notifications when significant price fluctuations occur.
+- **FinBot: AI-Driven Financial Assistant (Gemini API):** Real-time cryptocurrency insights and personalized advice via conversational interaction.
 
+## Upcoming Features:
+  - **AI-Powered Volatility Alerts:** BigQuery analytics and vertex AI to detect significant price changes in user-tracked cryptos.
+  - **Multi-Cloud Integration:** Store user-selected cryptos in Firestore, analyze in BigQuery, and use AWS services for email notifications when significant price fluctuations occur.
  
 ## Cloud Services Used
 
