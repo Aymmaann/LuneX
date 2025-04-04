@@ -39,7 +39,7 @@ const FinBot = () => {
 
           {!showResult? (
             <div className='flex items-center justify-center pt-36'>
-              <p className="bg-gradient-to-b from-zinc-400 to-zinc-700 bg-clip-text text-transparent text-[45px]">Hello, {userInfo?.name}.</p>
+              <p className="bg-gradient-to-b from-zinc-300 to-zinc-600 bg-clip-text text-transparent text-[45px]">Hello, {userInfo?.name}.</p>
             </div>
           ) : (
             <div>
@@ -70,7 +70,7 @@ const FinBot = () => {
           )}
 
 
-          <div className='flex items-center justify-between border border-zinc-800 rounded-2xl gap-3'>
+          <div className='flex items-center justify-between border border-zinc-800 rounded-lg gap-3'>
             <input type="text" 
                    placeholder='Ask FinBot' 
                    className='bg-transparent outline-none text-sm py-4 px-4 flex-1 placeholder:text-zinc-400 h-full'
