@@ -223,7 +223,7 @@ const Wallet = () => {
             </div>
         </div>
 
-        <p className='text-3xl mt-10 pl-4 mb-2'>Investments</p>
+        <p className='text-3xl mt-8 pl-5 mb-2'>Investments</p>
         <div>
             {invested.length>0? (
                 <div className='grid grid-cols-3 gap-4 p-4'>
