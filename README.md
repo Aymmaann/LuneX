@@ -38,6 +38,9 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 - **CoinGecko API:**  
   - Fetching real-time cryptocurrency market data, including prices, historical trends, and market cap.
 
+- **Google Gemini API:**
+  - Powers FinBot, providing AI-driven financial assistance and real-time cryptocurrency insights through conversational interaction.
+
 
 
 ### Upcoming Cloud Services
