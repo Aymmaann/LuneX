@@ -88,18 +88,22 @@ const ContextProvider = ({ children }) => {
         }
     }, []);
 
-    const delayResponse = (text,delay) => {
-        setResponse(text[0])
-        let charIndex = 0
+    const delayResponse = (text, delay) => {
+        if (!text) {
+            setResponse(''); 
+            return;
+        }
+        setResponse(text[0] || ''); 
+        let charIndex = 0;
         const intervalId = setInterval(() => {
-            if(charIndex < text.length) {
-                setResponse((prev) => prev + text[charIndex])
-                charIndex++
+            if (charIndex < text.length) {
+                setResponse((prev) => prev + (text[charIndex] || '')); 
+                charIndex++;
             } else {
-                clearInterval(intervalId)
+                clearInterval(intervalId);
             }
-        }, delay)
-    }
+        }, delay);
+    };
 
     const onSent = async () => {
         setResponse("");
@@ -134,6 +138,7 @@ const ContextProvider = ({ children }) => {
         delayResponse(result, 4);
         setLoading(false);
         setInput('');
+        console.log(response);
     };
 
     const contextValue = {
