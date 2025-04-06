@@ -5,6 +5,7 @@ import WalletCard from '@/components/WalletCard';
 import { io } from 'socket.io-client';
 import Loading from '@/components/Loading';
 import assets from '../assets/assets';
+import EmptyPage from '@/components/EmptyPage';
 
 const Wallet = () => {
   const [search, setSearch] = useState('');
@@ -139,102 +140,106 @@ const Wallet = () => {
       <div className='flex-1 pl-64 bg-darkGray'>
         <SearchNav setSearch={setSearch} handleSearch={handleSearch} />
 
-        <div className='bg-darkBlue flex-1 rounded-xl p-5 m-4'>
-            <p className='text-2xl'>Wallet</p>
-            <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-1" />
-            
-            <div className='flex justify-between'>
-                <div>
-                    <p className='font-medium text-zinc-600 text-sm mt-3'>Total Net Worth:</p>
-                    <div className="flex gap-0.5 items-end mt-1">
-                        <p className='font-medium text-3xl'>${netWorth.toFixed(5)}</p>
-                        <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
-                    </div>
-                    <div className="flex items-center gap-1 mt-2">
-                        <div className={`rounded-md ${priceChangePercent > 0 ? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
-                            {priceChangePercent >= 0 ? (
-                                <assets.IoArrowUpCircle className='text-[#43e643]' />
-                            ) : (
-                                <assets.IoArrowDownCircle className='text-[#ec3e44]' />
-                            )}
+        {invested.length > 0 && (
+            <div className='bg-darkBlue flex-1 rounded-xl p-5 m-4'>
+                <p className='text-2xl'>Wallet</p>
+                <hr className="my-4 h-[1px] bg-gradient-to-r from-[#1c1e39] via-[#343850] to-[#1c1e39] border-0 mx-1" />
+                
+                <div className='flex justify-between'>
+                    <div>
+                        <p className='font-medium text-zinc-600 text-sm mt-3'>Total Net Worth:</p>
+                        <div className="flex gap-0.5 items-end mt-1">
+                            <p className='font-medium text-3xl'>${netWorth.toFixed(5)}</p>
+                            <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
                         </div>
-                        <p className={`font-medium text-xs ${priceChangePercent >= 0 ? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{priceChangePercent >= 0 ? priceChangePercent : priceChangePercent * -1}%</p>
-                    </div>
-                    <p className='font-medium text-zinc-600 text-sm mt-6'>Total Investments:</p>
-                    <div className="flex gap-0.5 items-end mt-1">
-                        <p className='font-medium text-3xl'>${investments.toFixed(5)}</p>
-                        <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
-                    </div>
-                </div>
-                <div>
-                    {top3Cryptos.length > 0 && (
-                        <div className='border border-gray-600 rounded-lg w-full h-[30px] p-1 flex gap-1 mt-4'>
-                            {top3Cryptos.map((crypto, index) => (
-                                <div
-                                    key={crypto.id}
-                                    className={`h-[20px] rounded-md`}
-                                    style={{
-                                        width: `${(crypto.totalValue / netWorth) * 584}px`,
-                                        backgroundColor: index === 0 ? '#4f46e5' : index === 1 ? '#232b43' : '#1dadc3',
-                                    }}
-                                ></div>
-                            ))}
-                            {netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0) > 0 && (
-                                <div
-                                    className='bg-[#eeeeee] h-[20px] rounded-md'
-                                    style={{
-                                        width: `${(
-                                            (netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0)) /
-                                            netWorth
-                                        ) * 584}px`,
-                                    }}
-                                ></div>
-                            )}
+                        <div className="flex items-center gap-1 mt-2">
+                            <div className={`rounded-md ${priceChangePercent > 0 ? 'bg-[#0d2218]' : 'bg-[#240d16]'}`}>
+                                {priceChangePercent >= 0 ? (
+                                    <assets.IoArrowUpCircle className='text-[#43e643]' />
+                                ) : (
+                                    <assets.IoArrowDownCircle className='text-[#ec3e44]' />
+                                )}
+                            </div>
+                            <p className={`font-medium text-xs ${priceChangePercent >= 0 ? 'text-[#43e643]' : 'text-[#ec3e44]'}`}>{priceChangePercent >= 0 ? priceChangePercent : priceChangePercent * -1}%</p>
                         </div>
-                    )}
-                    {top3Cryptos.length > 0 && (
-                        <div className='mt-4'>
-                            {top3Cryptos.map((crypto, index) => (
-                                <div key={crypto.id} className='flex items-center justify-between mt-2'>
-                                    <div className='flex items-center gap-2'>
-                                        <div
-                                            className='w-[15px] h-[15px] rounded-sm'
-                                            style={{ backgroundColor: index === 0 ? '#4f46e5' : index === 1 ? '#232b43' : '#1dadc3' }}
-                                        ></div>
-                                        <p className='text-zinc-400 font-light'>{crypto.name}</p>
+                        <p className='font-medium text-zinc-600 text-sm mt-6'>Total Investments:</p>
+                        <div className="flex gap-0.5 items-end mt-1">
+                            <p className='font-medium text-3xl'>${investments.toFixed(5)}</p>
+                            <p className='text-zinc-600 text-xs font-semibold pb-1'>USD</p>
+                        </div>
+                    </div>
+                    <div>
+                        {top3Cryptos.length > 0 && (
+                            <div className='border border-gray-600 rounded-lg w-full h-[30px] p-1 flex gap-1 mt-4'>
+                                {top3Cryptos.map((crypto, index) => (
+                                    <div
+                                        key={crypto.id}
+                                        className={`h-[20px] rounded-md`}
+                                        style={{
+                                            width: `${(crypto.totalValue / netWorth) * 584}px`,
+                                            backgroundColor: index === 0 ? '#4f46e5' : index === 1 ? '#232b43' : '#1dadc3',
+                                        }}
+                                    ></div>
+                                ))}
+                                {netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0) > 0 && (
+                                    <div
+                                        className='bg-[#eeeeee] h-[20px] rounded-md'
+                                        style={{
+                                            width: `${(
+                                                (netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0)) /
+                                                netWorth
+                                            ) * 584}px`,
+                                        }}
+                                    ></div>
+                                )}
+                            </div>
+                        )}
+                        {top3Cryptos.length > 0 && (
+                            <div className='mt-4'>
+                                {top3Cryptos.map((crypto, index) => (
+                                    <div key={crypto.id} className='flex items-center justify-between mt-2'>
+                                        <div className='flex items-center gap-2'>
+                                            <div
+                                                className='w-[15px] h-[15px] rounded-sm'
+                                                style={{ backgroundColor: index === 0 ? '#4f46e5' : index === 1 ? '#232b43' : '#1dadc3' }}
+                                            ></div>
+                                            <p className='text-zinc-400 font-light'>{crypto.name}</p>
+                                        </div>
+                                        <p className='font-medium text-md'>${crypto.totalValue.toFixed(2)}</p>
                                     </div>
-                                    <p className='font-medium text-md'>${crypto.totalValue.toFixed(2)}</p>
-                                </div>
-                            ))}
-                            {netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0) > 0 && (
-                                <div className='flex items-center justify-between mt-2'>
-                                    <div className='flex items-center gap-2'>
-                                        <div className='w-[15px] h-[15px] rounded-sm bg-[#eeeeee]'></div>
-                                        <p className='text-zinc-400 font-medium'>Others</p>
+                                ))}
+                                {netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0) > 0 && (
+                                    <div className='flex items-center justify-between mt-2'>
+                                        <div className='flex items-center gap-2'>
+                                            <div className='w-[15px] h-[15px] rounded-sm bg-[#eeeeee]'></div>
+                                            <p className='text-zinc-400 font-medium'>Others</p>
+                                        </div>
+                                        <p className='font-medium text-md'>
+                                            ${(netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0)).toFixed(2)}
+                                        </p>
                                     </div>
-                                    <p className='font-medium text-md'>
-                                        ${(netWorth - top3Cryptos.reduce((total, crypto) => total + crypto.totalValue, 0)).toFixed(2)}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        )}
 
-        <p className='text-3xl mt-8 pl-5 mb-2'>Investments</p>
         <div>
             {invested.length>0? (
-                <div className='grid grid-cols-3 gap-4 p-4'>
-                {invested.map((crypto) => (
-                <div key={crypto.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer'>
-                    <WalletCard crypto={crypto} />
+                <div>
+                    <p className='text-3xl mt-8 pl-5 mb-2'>Investments</p>
+                    <div className='grid grid-cols-3 gap-4 p-4'>
+                        {invested.map((crypto) => (
+                        <div key={crypto.id} className='p-5 rounded-xl bg-darkBlue cursor-pointer'>
+                            <WalletCard crypto={crypto} />
+                        </div>
+                        ))}
+                    </div>
                 </div>
-                ))}
-            </div>
             ) : (
-                <p>No saved cryptos found</p>
+                <EmptyPage text="wallet" />
             )}
         </div>
       </div>

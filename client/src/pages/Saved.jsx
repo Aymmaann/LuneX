@@ -5,6 +5,7 @@ import NotFound from './NotFound';
 import Loading from '../components/Loading';
 import SearchNav from '../components/SearchNav';
 import SavedCard from '../components/SavedCard';
+import EmptyPage from '@/components/EmptyPage';
 import { io } from 'socket.io-client'; 
 
 const Saved = () => {
@@ -63,7 +64,6 @@ const Saved = () => {
         setSaved((prevSaved) => {
             const existingIndex = prevSaved.findIndex((crypto) => crypto.id === updatedCrypto.id);
             if (existingIndex !== -1) {
-                // Update existing crypto
                 const newSaved = [...prevSaved];
                 newSaved[existingIndex] = updatedCrypto;
                 return newSaved;
@@ -120,7 +120,35 @@ return (
               ))}
             </div>
             ) : (
-              <p>No saved cryptos found</p>
+              <EmptyPage text='watchlist' />
+              // <div className='w-full p-16 flex items-center justify-center '>
+              //   <div className='bg-darkBlue p-6 rounded-lg border border-zinc-800 text-center'>
+
+              //     <div className='bg-mediumBlue w-full h-[192px] rounded-t-lg p-5'>
+              //       <div className='bg-darkBlue w-full h-[40px] rounded-md flex items-center justify-between px-4'>
+              //         <div className='h-[10px] rounded-full w-[10px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-lg w-[150px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-lg w-[60px] bg-zinc-400'></div>
+              //       </div>
+              //       <div className='bg-darkBlue w-full h-[40px] rounded-md flex items-center justify-between px-4 mt-4'>
+              //         <div className='h-[10px] rounded-lg w-[120px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-full w-[100px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-lg w-[40px] bg-zinc-400'></div>
+              //       </div>
+              //       <div className='bg-darkBlue w-full h-[40px] rounded-md flex items-center justify-between px-4 mt-4'>
+              //         <div className='h-[10px] rounded-full w-[70px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-lg w-[10px] bg-zinc-400'></div>
+              //         <div className='h-[10px] rounded-lg w-[170px] bg-zinc-400'></div>
+              //       </div>
+              //     </div>
+
+              //     <p className='font-semibold text-xl mt-8'>Your watchlist is empty</p>
+              //     <p className='w-[500px] text-zinc-500 text-sm mt-4'>Kickstart your crypto journey by exploring the market and building your watchlist.</p>
+              //     <Link to="/market">
+              //       <button className='mt-6 py-2 px-4 bg-white text-darkBlue rounded-md smoothTransition font-medium text-sm hover:bg-zinc-300 hover:cursor-pointer'>Browse Market</button>
+              //     </Link>
+              //   </div>
+              // </div>
             )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import noBgLogo from './images/no-bg-logo.png';
 import pfp from './images/pfp.png'
 import errorbg from './images/error-bg.jpg'
 import bgPlain from './images/bg-plain.png'
+import emptySaved from './images/empty-saved.png'
 
 // Icons
 import { BiSolidAnalyse } from "react-icons/bi";
@@ -41,6 +42,7 @@ const assets = {
     pfp,
     errorbg,
     bgPlain,
+    emptySaved,
 
     // Icons
     BiSolidAnalyse,

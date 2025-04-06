@@ -12,6 +12,7 @@ export default {
   			violet: '#a392f9',
   			darkBlue: '#0b0c19',
   			darkGray: '#05060f',
+			mediumBlue: '#131627',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

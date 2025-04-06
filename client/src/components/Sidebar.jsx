@@ -31,35 +31,35 @@ const Sidebar = () => {
                     <p className='text-sm font-semibold'>Home</p>
                 </Link>
 
-                <Link to='/market' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/market'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <Link to='/market' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/market'? 'bg-mediumBlue' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.RiDashboardFill className={`text-[18px] ${location.pathname === '/market'? 'text-violet' : 'text-white'}`} />
                     </div>
                     <p className={`text-sm font-semibold ${location.pathname === '/market'? 'text-violet' : 'text-white'}`}>Market</p>
                 </Link>
 
-                <Link to='/trending' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/trending'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <Link to='/trending' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/trending'? 'bg-mediumBlue' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.IoMdTrendingUp className={`text-[18px] ${location.pathname === '/trending'? 'text-violet' : 'text-white'}`} />
                     </div>
                     <p className={`text-sm font-semibold ${location.pathname === '/trending'? 'text-violet' : 'text-white'}`}>Trending</p>
                 </Link>
 
-                <Link to='/wallet' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/wallet'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <Link to='/wallet' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/wallet'? 'bg-mediumBlue' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.IoWallet className={`text-[18px] ${location.pathname === '/wallet'? 'text-violet' : 'text-white'}`} />
                     </div>
                     <p className={`text-sm font-semibold ${location.pathname === '/wallet'? 'text-violet' : 'text-white'}`}>Wallet</p>
                 </Link>
 
-                <Link to='/saved' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/saved'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <Link to='/saved' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/saved'? 'bg-mediumBlue' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.LuFileDown className={`text-[18px] ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`} />
                     </div>
                     <p className={`text-sm font-semibold ${location.pathname === '/saved'? 'text-violet' : 'text-white'}`}>Saved</p>
                 </Link>
 
-                <Link to='/finbot' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/finbot'? 'bg-[#131627]' : 'bg-transparent'}`}>
+                <Link to='/finbot' className={`flex items-center gap-2 p-1.5 rounded-lg ${location.pathname === '/finbot'? 'bg-mediumBlue' : 'bg-transparent'}`}>
                     <div className="p-2 rounded-md">
                         <assets.RiRobot2Fill className={`text-[18px] ${location.pathname === '/finbot'? 'text-violet' : 'text-white'}`} />
                     </div>
