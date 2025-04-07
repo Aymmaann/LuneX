@@ -131,8 +131,7 @@ const ContextProvider = ({ children }) => {
 
             User's Question: ${input}
         `;
-
-        console.log("Saved cryptos: ", JSON.stringify(savedCryptos));
+        
         const result = await getResponse(context);
 
         delayResponse(result, 4);
