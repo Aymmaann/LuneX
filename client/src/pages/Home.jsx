@@ -18,7 +18,7 @@ const Home = () => {
           <p className='text-5xl font-semibold text-zinc-200'>Meet LuneX</p>
           <p className='font-light mt-6 text-sm'>Advanced crypto tracking with real-time insights. Analyze market trends and assess risk effortlessly.</p>
           <Link to="/market">
-            <button className='mt-6 py-2 px-4 bg-white text-[#262063] rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-zinc-300'>Get started</button>
+            <button className='mt-6 py-2 px-4 bg-zinc-200 text-[#262063] rounded-md smoothTransition cursor-pointer font-medium text-sm hover:bg-zinc-300'>Get started</button>
           </Link>
         </div>
 

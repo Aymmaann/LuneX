@@ -61,7 +61,7 @@ const FinBot = () => {
                 {loading? (
                   <p className='leading-8 tracking-wide text-sm'>Loading...</p>
                 ) : (
-                  <div className='leading-8 tracking-wide max-h-[51vh] overflow-y-scroll text-sm'>
+                  <div className='leading-8 tracking-wide max-h-[60vh] overflow-y-scroll text-sm'>
                     <ReactMarkdown>{response.trim()}</ReactMarkdown>
                   </div>
                 )}
@@ -70,7 +70,7 @@ const FinBot = () => {
           )}
 
 
-          <div className='flex items-center justify-between border border-zinc-800 rounded-lg gap-3 mt-6'>
+          <div className='flex items-center justify-between border border-zinc-800 rounded-lg gap-3'>
             <input type="text" 
                    placeholder='Ask FinBot' 
                    className='bg-transparent outline-none text-sm py-4 px-4 flex-1 placeholder:text-zinc-400 h-full'
