@@ -42,6 +42,7 @@ const App = () => {
 
   return (
     <div>
+      {/* App */}
       <RefresHandler setIsAuthenticated={setIsAuthenticated} />
       <Routes>
         <Route path='/' element={

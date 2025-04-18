@@ -8,6 +8,8 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user-info')
+    localStorage.removeItem("crypto-analysis");
+    localStorage.removeItem("saved-cryptos");
     navigate("/login")
   }
 

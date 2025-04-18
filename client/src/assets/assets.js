@@ -32,6 +32,16 @@ import { LuCheck } from "react-icons/lu";
 import { IoWallet } from "react-icons/io5";
 import { FaCloudArrowDown } from "react-icons/fa6";
 import { BiRightArrow } from "react-icons/bi";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { IoStatsChartOutline } from "react-icons/io5";
+import { IoPieChartOutline } from "react-icons/io5";
+import { IoTimeOutline } from "react-icons/io5";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { IoArrowUpOutline } from "react-icons/io5";
+import { IoArrowDownOutline } from "react-icons/io5";
+import { IoFlashOutline } from "react-icons/io5";
+import { IoShieldOutline } from "react-icons/io5";
+import { IoGridOutline } from "react-icons/io5";
 
 const assets = {
     // Images
@@ -67,7 +77,17 @@ const assets = {
     LuCheck,
     IoWallet,
     FaCloudArrowDown,
-    BiRightArrow
+    BiRightArrow,
+    IoShieldCheckmarkOutline,
+    IoStatsChartOutline,
+    IoPieChartOutline,
+    IoTimeOutline,
+    IoAnalyticsOutline,
+    IoArrowUpOutline,
+    IoArrowDownOutline,
+    IoFlashOutline,
+    IoShieldOutline,
+    IoGridOutline
 }
 
 export default assets;
