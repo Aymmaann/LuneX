@@ -14,6 +14,7 @@ import {
     updateAllInvestedUsersCoins
   } from './controllers/coinController.js';
 import { Server } from 'socket.io';
+import { saveInvestedCrypto as originalSaveInvestedCrypto } from './controllers/coinController.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -151,8 +152,6 @@ app.get("/api/trigger-crypto-update", triggerCryptoUpdate)
 app.get("/api/update-all-users", updateAllUsersCoins);
 
 app.get("/api/update-all-invested-users", updateAllInvestedUsersCoins);
-
-import { saveInvestedCrypto as originalSaveInvestedCrypto } from './controllers/coinController.js';
 
 app.post("/api/invest-crypto", async (req, res) => {
     try {
