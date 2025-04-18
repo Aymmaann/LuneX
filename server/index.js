@@ -170,5 +170,4 @@ app.post("/api/invest-crypto", async (req, res) => {
 });
 
 app.use('/auth', router);
-
 export { io };
