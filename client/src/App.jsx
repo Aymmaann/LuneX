@@ -26,6 +26,14 @@ const App = () => {
       )
   }
 
+  const GoogleAuthSignUpProvider = () => {
+    return (
+      <GoogleOAuthProvider clientId='1078438493144-7sklkbbp49detn9eh5gstfstuskcr3g4.apps.googleusercontent.com'>
+        <SignUp></SignUp>
+      </GoogleOAuthProvider>
+    )
+  }
+
   const PrivateRoute = ({ element }) => {
     return isAuthenticated? element : <Navigate to="/login" />
   }
@@ -92,7 +100,8 @@ const App = () => {
             exit={{ opacity: 0 }} 
             transition={{ duration: 0.3 }}
           >
-            <SignUp />
+            {/* <SignUp /> */}
+            <GoogleAuthSignUpProvider />
           </motion.div>
         } />
         <Route path='/profile' element={

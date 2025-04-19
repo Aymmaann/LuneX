@@ -45,12 +45,11 @@ const SignUp = () => {
     }
   }
 
-  const handleGoogleLogin = useGoogleLogin({
+  const handleGoogleSignUp = useGoogleLogin({
     onSuccess: responseGoogle,
     onError: responseGoogle,
     flow: 'auth-code'
   })
-
 
   return (
     <div className='h-screen text-white'>
@@ -73,8 +72,6 @@ const SignUp = () => {
                   <img src={assets.googleLogo} alt="" className='w-[20px]'/>
                   <p className='text-sm text-gray-300'>Sign up with Google</p>
                 </button>
-                {/* <div id="google-signup-button" className='mt-6'></div> */}
-
                 <div className='text-gray-700 flex justify-center items-center gap-2 mt-5'>
                   <div className='flex-1 h-[2px] bg-borderGray rounded-md'></div>
                   <p className='text-sm font-light text-zinc-600'>OR</p>

@@ -42,6 +42,8 @@ import { IoArrowDownOutline } from "react-icons/io5";
 import { IoFlashOutline } from "react-icons/io5";
 import { IoShieldOutline } from "react-icons/io5";
 import { IoGridOutline } from "react-icons/io5";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const assets = {
     // Images
@@ -87,7 +89,9 @@ const assets = {
     IoArrowDownOutline,
     IoFlashOutline,
     IoShieldOutline,
-    IoGridOutline
+    IoGridOutline,
+    IoMdNotificationsOutline,
+    IoSettingsOutline
 }
 
 export default assets;

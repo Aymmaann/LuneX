@@ -134,7 +134,7 @@ const ContextProvider = ({ children }) => {
         
         const result = await getResponse(context);
 
-        delayResponse(result, 4);
+        delayResponse(result, 10);
         setLoading(false);
         setInput('');
         console.log(response);
