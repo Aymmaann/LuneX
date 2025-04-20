@@ -93,7 +93,7 @@ const PortfolioSummary = ({ data }) => {
               
               <div className="bg-gray-800 bg-opacity-50 p-2 rounded-md">
                 <p className="text-xs text-zinc-500">High Risk Assets</p>
-                <p className="text-lg font-medium">{riskProfile?.high_risk_concentration || '0'}%</p>
+                <p className="text-lg font-medium">{(riskProfile?.high_risk_concentration).toFixed(2) || '0'}%</p>
                 <p className="text-xs text-zinc-400">
                   {(riskProfile?.high_risk_concentration || 0) > 50 ? "Very High Concentration" : 
                    (riskProfile?.high_risk_concentration || 0) > 30 ? "High Concentration" : 
@@ -181,7 +181,7 @@ const PortfolioSummary = ({ data }) => {
                 <div className="flex-1">
                   <div className="flex justify-between">
                     <p className="text-xs">Large Cap</p>
-                    <p className="text-xs font-medium">{marketCap?.large_cap_percentage || '0'}%</p>
+                    <p className="text-xs font-medium">{(marketCap?.large_cap_percentage).toFixed(2) || '0'}%</p>
                   </div>
                   <div className="w-full h-5 bg-gray-800 rounded-md overflow-hidden mt-1">
                     <div 
@@ -200,7 +200,7 @@ const PortfolioSummary = ({ data }) => {
                 <div className="flex-1">
                   <div className="flex justify-between">
                     <p className="text-xs">Mid Cap</p>
-                    <p className="text-xs font-medium">{marketCap?.mid_cap_percentage || '0'}%</p>
+                    <p className="text-xs font-medium">{(marketCap?.mid_cap_percentage).toFixed(2) || '0'}%</p>
                   </div>
                   <div className="w-full h-5 bg-gray-800 rounded-md overflow-hidden mt-1">
                     <div 

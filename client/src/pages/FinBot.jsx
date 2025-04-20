@@ -70,7 +70,7 @@ const FinBot = () => {
           <div className="flex-1 overflow-y-auto pb-4 scroll-smooth">
             {!showResult ? (
               <div className="flex flex-col items-center justify-center h-full">
-                <p className="bg-gradient-to-b from-zinc-300 to-zinc-600 bg-clip-text text-transparent text-3xl md:text-5xl pb-6">
+                <p className="bg-gradient-to-b from-zinc-300 to-zinc-600 bg-clip-text text-transparent text-3xl md:text-6xl pb-6">
                   Hello, {userInfo?.name || 'there'}
                 </p>
                 <p className="text-zinc-400 text-center mb-8">Ask me anything about finance, crypto, or investments</p>

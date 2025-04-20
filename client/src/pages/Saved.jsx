@@ -8,8 +8,10 @@ import EmptyPage from '../components/EmptyPage';
 import { io } from 'socket.io-client';
 import CryptoAnalysisService from '../services/cryptoAnalysisService';
 import PortfolioSummary from '../components/PortfolioSummary';
+import CryptoReportGenerator from '@/components/ryptoReportGenerator';
 
 const Saved = () => {
+  const [savedCoins, setSavedCoins] = useState([])
   const [saved, setSaved] = useState([]);
   const [originalSaved, setOriginalSaved] = useState([]);
   const [search, setSearch] = useState('');
@@ -193,6 +195,20 @@ const Saved = () => {
 
         {/* Portfolio Summary */}
         {portfolioData && <PortfolioSummary data={portfolioData} />}
+
+        {saved.length > 0 && (
+          <div className="px-4 py-3 bg-[#161722] rounded-lg mx-4 mt-3 mb-4">
+            <div className="flex flex-col sm:flex-row justify-between items-center">
+              <div>
+                <h3 className="text-lg font-medium text-zinc-100">Investment Report</h3>
+                <p className="text-sm text-zinc-400">Generate a comprehensive analysis of your saved cryptocurrencies</p>
+              </div>
+              <div className="mt-3 sm:mt-0">
+                <CryptoReportGenerator />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Sorting Controls */}
         <div className="flex flex-wrap gap-2 px-4 pt-4">

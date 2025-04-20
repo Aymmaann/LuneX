@@ -58,6 +58,16 @@ const SavedCard = ({ crypto }) => {
     return "Very High Risk";
   };
 
+  const getDaysExplanation = (days) => {
+    if (days < 10) return "Newly monitored";
+    if (days < 20) return "Monitored for a bit";
+    if (days < 30) return "Actively monitored";
+    if (days < 40) return "Closely tracked";
+    return "Long-term watch";
+  };
+  
+  
+
   return (
     <div>
       {/* Header */}
@@ -142,7 +152,7 @@ const SavedCard = ({ crypto }) => {
       )}
       
       {/* Key Metrics Summary - New section */}
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <div className="mt-4 grid grid-cols-2 gap-2">
         <div className="bg-gray-900 bg-opacity-40 p-2 rounded-md">
           <p className="text-xs text-zinc-500">Risk</p>
           <p className="text-sm font-medium">{crypto.risk_score?.toFixed(1) || 'N/A'}</p>
@@ -150,18 +160,17 @@ const SavedCard = ({ crypto }) => {
         </div>
         
         <div className="bg-gray-900 bg-opacity-40 p-2 rounded-md">
-          <p className="text-xs text-zinc-500">Market Cap</p>
-          <p className="text-sm font-medium">
-            {crypto.market_cap ? formatLargeNumber(crypto.market_cap, '$') : 'N/A'}
-          </p>
+          <p className="text-xs text-zinc-500">Days Since Saved</p>
+          <p className="text-sm font-medium">{crypto.days_since_saved? crypto.days_since_saved : 'N/A'}</p>
+          <p className="text-xs text-zinc-400">{getDaysExplanation(crypto.days_since_saved)}</p>
         </div>
         
-        <div className="bg-gray-900 bg-opacity-40 p-2 rounded-md">
+        {/* <div className="bg-gray-900 bg-opacity-40 p-2 rounded-md">
           <p className="text-xs text-zinc-500">Volume (24h)</p>
           <p className="text-sm font-medium">
             {crypto.total_volume ? formatLargeNumber(crypto.total_volume, '$') : 'N/A'}
           </p>
-        </div>
+        </div> */}
       </div>
       
       {/* Expand/Collapse Button */}

@@ -32,13 +32,11 @@ const Login = () => {
     try {
       if(authResult['code']) {
         const result = await googleAuth(authResult['code'])
-        console.log("working")
         const { id, name, email, image } = result.data.user
         const token = result.data.token
         const obj = {id,email,name,image,token}
         localStorage.setItem('user-info', JSON.stringify(obj));
         localStorage.setItem('token', token);
-        console.log(token)
         navigate("/home")
       }
     } catch(error) {
