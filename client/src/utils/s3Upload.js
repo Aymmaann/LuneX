@@ -9,13 +9,12 @@ const s3Client = new S3Client({
 });
 
 export const uploadPDFToS3 = async (fileBlob, fileName, userEmail) => {
-    // Convert Blob to ArrayBuffer
     const arrayBuffer = await fileBlob.arrayBuffer();
   
     const params = {
       Bucket: import.meta.env.VITE_S3_BUCKET_NAME,
       Key: `${userEmail}/${fileName}`,
-      Body: arrayBuffer, // Use arrayBuffer instead of Blob directly
+      Body: arrayBuffer, 
       ContentType: 'application/pdf',
       ACL: 'private',
     };

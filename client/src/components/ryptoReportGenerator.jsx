@@ -178,7 +178,7 @@ const CryptoReportGenerator = () => {
       } else if (line.startsWith('**') && line.endsWith('**')) {
         currentFont = boldFont;
         line = line.replace(/^\*\*|\*\*$/g, '');
-        isBoldLine = true; // Flag to maintain regular size for full bold lines
+        isBoldLine = true; 
       } else if (line.startsWith('*') && line.endsWith('*')) {
         currentFont = italicFont || font;
         line = line.replace(/^\*|\*$/g, '');
