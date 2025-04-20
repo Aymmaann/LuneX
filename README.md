@@ -27,6 +27,14 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 
 - **Google Cloud Storage (Bucket):**  
   - Stored exports of saved cryptocurrencies from Datastore in Google Cloud Storage, which are then used in BigQuery for detailed analytics and reporting. The analysis results are stored back for future reference and processing.
+
+- **Amazon S3 (AWS):**  
+  - Used Amazon S3 to store downloadable cryptocurrency investment reports in PDF format.
+  - Each user's reports are stored in a dedicated directory structure for secure and organized access.
+
+- **AWS IAM:**  
+  - Created a dedicated IAM user with restricted permissions using the `AmazonS3FullAccess` managed policy for secure programmatic access to S3.
+  - IAM access keys are used for secure file uploads from the frontend.
   
 - **Cloud Run (Google Cloud):**  
   - Used Cloud Run to host the backend services, providing a scalable, serverless environment.
@@ -53,11 +61,9 @@ LuneX is a cloud-powered cryptocurrency tracking platform that provides real-tim
 ### Upcoming Cloud Services
 
 - **AWS EC2 (Amazon Web Services):**  
-  - Hosting the backend services and API for real-time cryptocurrency tracking.  
+  - Hosting the frontend services and API for real-time cryptocurrency tracking.  
   - Ensuring scalability and performance for high-traffic data requests.  
 
-- **AWS SES (Simple Email Service):**  
-  - Sending automated alerts for sudden price changes.  
 
 ### Useful BigQuery Queries for Users  
 
@@ -100,6 +106,11 @@ The client component of this project utilizes the following environment variable
 * `VITE_GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID for the client-side application.
 * `VITE_API_URL`: The URL of the API server that the client will communicate with.
 * `VITE_GEMINI_API_KEY`: Your application's key for accessing the Google Gemini API.
+* `VITE_S3_BUCKET_NAME`: The name of the S3 bucket where reports are stored.
+* `VITE_AWS_REGION`: The AWS region where your S3 bucket is located.
+* `VITE_ACCESS_KEY`: The AWS IAM access key used to authenticate your application with AWS services.
+* `VITE_SECRET_ACCESS_KEY`: The corresponding AWS IAM secret access key used alongside the access key for secure authentication with AWS services.
+
 
 **Setting Up Environment Variables:**
 
