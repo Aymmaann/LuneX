@@ -3,6 +3,7 @@ import { GeminiContext } from '@/context/GeminiContext';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import getResponse from '@/config/gemini';
+import { uploadPDFToS3 } from '@/utils/s3Upload';
 
 const CryptoReportGenerator = () => {
   const { savedCryptos } = useContext(GeminiContext);
@@ -298,15 +299,19 @@ const CryptoReportGenerator = () => {
       
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       saveAs(blob, 'Crypto_Investment_Report.pdf');
-      
+
+      const user = JSON.parse(localStorage.getItem('user-info'));
+      const fileName = `Crypto_Investment_Report_${Date.now()}.pdf`;
+      await uploadPDFToS3(blob, fileName, user.email);
       setProgress(100);
+
       setTimeout(() => {
         setIsGenerating(false);
         setProgress(0);
       }, 1000);
     } catch (error) {
       console.error('Error generating report:', error);
-      alert('Failed to generate report. Please try again later.');
+      alert('Failed to generate or upload report. Please try again later.');
       setIsGenerating(false);
       setProgress(0);
     }
