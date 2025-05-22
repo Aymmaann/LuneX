@@ -25,21 +25,6 @@ const EmptyPage = ({ text }) => {
                         <div className='h-[10px] rounded-lg w-[170px] bg-zinc-400'></div>
                     </div>
                 </div>
-                {/* <div className='bg-darkBlue rounded-md p-4 mt-4'>
-                    <div className='bg-darkBlue w-full h-[40px] rounded-md flex items-center justify-between '>
-                        <div className='h-[30px] rounded-lg w-[30px] bg-zinc-400'></div>
-                        <div className='flex flex-col justify-between h-[30px]'>
-                            <div className='h-[10px] bg-zinc-400 w-[170px] rounded-md'></div>
-                            <div className='h-[10px] bg-zinc-400 w-[170px] rounded-md'></div>
-                        </div>
-                        <div className='h-[10px] rounded-full w-[90px] bg-zinc-400'></div>
-                    </div>
-                    <div className='bg-darkBlue w-full h-[40px] rounded-md flex items-center justify-between px-4 mt-4'>
-                        <div className='h-[10px] rounded-full w-[70px] bg-zinc-400'></div>
-                        <div className='h-[10px] rounded-lg w-[10px] bg-zinc-400'></div>
-                        <div className='h-[10px] rounded-lg w-[170px] bg-zinc-400'></div>
-                    </div>
-                </div> */}
             </div>
 
             <p className='font-semibold text-xl mt-8'>Your {text} is empty</p>
