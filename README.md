@@ -1,6 +1,6 @@
 # LuneX
 
-LuneX is a cloud-powered cryptocurrency tracking platform that provides real-time insights, historical analysis, and AI-driven volatility alerts. This project leverages multiple cloud services for authentication, data storage, and analytics. **LuneX is currently under development.**
+LuneX is a cloud-powered cryptocurrency tracking platform that provides real-time insights, historical analysis, and AI-driven volatility alerts. This project leverages multiple cloud services for authentication, data storage, and analytics.
 
 ## Features
 
